@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Application Portal</title><link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="orb orb1"></div><div class="orb orb2"></div>
+<main>
+<header>
+<div class="pill">APPLICATION PORTAL</div>
+<h1>Apply to the team.</h1>
+<p>Choose an application below. Your Discord username is used to identify your application.</p>
+<label for="username">Discord username</label>
+<input id="username" maxlength="100" placeholder="@username" autocomplete="off">
+<div id="topError" class="error"></div>
+</header>
+
+<section id="cards" class="cards">
+<button class="card" data-type="dev"><b>🛠️</b><strong>Dev Apps</strong><span>Apply to become a developer.</span></button>
+<button class="card" data-type="mod"><b>🛡️</b><strong>Mod Apps</strong><span>Apply to become a moderator.</span></button>
+<button class="card" data-type="valueList"><b>💎</b><strong>Value List Apps</strong><span>Apply to help manage the value list.</span></button>
+</section>
+
+<section id="application" class="hidden">
+<button id="back" class="back">← Back</button>
+<div class="heading"><div id="badge" class="pill"></div><h2 id="title"></h2><p id="count"></p></div>
+<form id="form"></form>
+<div class="submitbar"><span id="formError" class="error"></span><button id="submit" class="submit">Submit Application</button></div>
+</section>
+
+<section id="success" class="hidden success">
+<div class="check">✓</div><h2>Application submitted.</h2><p id="successText"></p>
+<button id="home" class="submit">Back to applications</button>
+</section>
+</main>
+<script src="config/questions.js"></script><script src="app.js"></script>
+</body>
+</html>
