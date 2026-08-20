@@ -1,4 +1,4 @@
-const WORKER_URL = "PASTE_YOUR_WORKER_URL_HERE";
+const WORKER_URL = "Phttps://applicationsmanager.top143266.workers.dev/";
 
 let selectedApplication = null;
 
