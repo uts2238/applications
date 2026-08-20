@@ -1,100 +1,66 @@
-/*
-    QUESTION CONFIGURATION
-
-    You can have up to 150 questions
-    in EACH application.
-
-    Example:
-
-    ["4"]: {
-        question: "What would you do?",
-        example: "Example: I would..."
-    }
-*/
-
 window.APPLICATIONS = {
 
     dev: {
-
         title: "Developer Application",
-
-        badge: "DEV APPS",
-
+        badge: "DEV",
         questions: {
-
             ["1"]: {
                 question: "What programming languages do you know?",
-                example: "Example: Luau, Lua, Python, JavaScript..."
+                example: "Lua, Luau, Python, JavaScript, etc."
             },
 
             ["2"]: {
-                question: "What Roblox development experience do you have?",
-                example: "Example: I've been developing Roblox games for 2 years..."
+                question: "How long have you been developing?",
+                example: "I've been developing Roblox games for around 2 years."
             },
 
             ["3"]: {
-                question: "What have you created before?",
-                example: "Example: I've created systems, UI, maps and gameplay mechanics..."
+                question: "What have you worked on before?",
+                example: "I've worked on UI, gameplay systems, modules and other Roblox projects."
             }
-
         }
-
     },
-
 
     mod: {
-
         title: "Moderator Application",
-
-        badge: "MOD APPS",
-
+        badge: "MOD",
         questions: {
-
             ["1"]: {
                 question: "What will you do if a member says the n word?",
-                example: "Example: I would follow the server rules, document the incident and take the appropriate moderation action..."
+                example: "I would follow the server rules and take the appropriate moderation action."
             },
 
             ["2"]: {
-                question: "How would you handle a member breaking the rules?",
-                example: "Example: I would remain calm, check the rules and apply the appropriate punishment..."
+                question: "What would you do if two members started arguing?",
+                example: "I'd try to calm things down and step in if either person broke a rule."
             },
 
             ["3"]: {
-                question: "Why should we choose you as a moderator?",
-                example: "Example: I am active, fair and experienced with moderation..."
+                question: "Why do you want to become a moderator?",
+                example: "I want to help keep the server enjoyable and deal with problems fairly."
             }
-
         }
-
     },
 
-
     valueList: {
-
         title: "Value List Application",
-
-        badge: "VALUE LIST APPS",
-
+        badge: "VALUE LIST",
         questions: {
-
             ["1"]: {
-                question: "How experienced are you with item values?",
-                example: "Example: I've followed the market for several months and understand rarity, demand and trading..."
+                question: "How experienced are you with values?",
+                example: "I've been trading and following the value list for several months."
             },
 
             ["2"]: {
-                question: "How would you determine the value of an item?",
-                example: "Example: I would compare recent trades, demand, rarity and current market trends..."
+                question: "How would you decide the value of an item?",
+                example: "I'd look at demand, rarity, recent trades and the current market."
             },
 
             ["3"]: {
                 question: "What would you do if you disagreed with another valuer?",
-                example: "Example: I would calmly discuss the evidence and try to reach a decision based on the available data..."
+                example: "I'd discuss the evidence with them and try to reach a fair conclusion."
             }
-
         }
-
     }
 
 };
