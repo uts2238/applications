@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Application Portal</title>
+    <title>Applications</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -19,15 +19,13 @@
     <header>
 
         <div class="badge">
-            APPLICATION PORTAL
+            APPLICATIONS
         </div>
 
-        <h1>
-            Apply to the team.
-        </h1>
+        <h1>Applications</h1>
 
         <p>
-            Choose an application below and answer all of the questions.
+            Choose an application below to get started.
         </p>
 
         <div class="username-box">
@@ -49,73 +47,60 @@
     </header>
 
 
-    <!-- THESE BUTTONS ALWAYS STAY VISIBLE -->
-
     <section class="application-buttons">
 
         <button
             class="application-card"
             data-application="dev"
+            type="button"
         >
-
-            <span class="card-icon">
-                🛠️
-            </span>
+            <span class="card-icon">🛠️</span>
 
             <span class="card-title">
                 Dev Apps
             </span>
 
             <span class="card-description">
-                Apply to become a developer.
+                Developer application
             </span>
-
         </button>
 
 
         <button
             class="application-card"
             data-application="mod"
+            type="button"
         >
-
-            <span class="card-icon">
-                🛡️
-            </span>
+            <span class="card-icon">🛡️</span>
 
             <span class="card-title">
                 Mod Apps
             </span>
 
             <span class="card-description">
-                Apply to become a moderator.
+                Moderator application
             </span>
-
         </button>
 
 
         <button
             class="application-card"
             data-application="valueList"
+            type="button"
         >
-
-            <span class="card-icon">
-                💎
-            </span>
+            <span class="card-icon">💎</span>
 
             <span class="card-title">
                 Value List Apps
             </span>
 
             <span class="card-description">
-                Apply to help manage the value list.
+                Value list application
             </span>
-
         </button>
 
     </section>
 
-
-    <!-- QUESTIONS APPEAR HERE -->
 
     <section
         id="applicationArea"
@@ -136,11 +121,7 @@
         </div>
 
 
-        <form id="applicationForm">
-
-            <!-- JavaScript puts questions here -->
-
-        </form>
+        <form id="applicationForm"></form>
 
 
         <div class="submit-area">
@@ -164,8 +145,6 @@
     </section>
 
 
-    <!-- SUCCESS MESSAGE -->
-
     <section
         id="successArea"
         class="success-area hidden"
@@ -176,11 +155,11 @@
         </div>
 
         <h2>
-            Application submitted!
+            Application submitted
         </h2>
 
         <p>
-            Your application was successfully sent.
+            Your application has been sent.
         </p>
 
         <p>
