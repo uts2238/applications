@@ -5,7 +5,9 @@ const WORKER_URL =
 let selectedApplication = null;
 
 
-/* ELEMENTS */
+/* =================================
+   ELEMENTS
+================================= */
 
 const usernameInput =
     document.getElementById("username");
@@ -44,7 +46,9 @@ const applicationID =
     document.getElementById("applicationID");
 
 
-/* APPLICATION BUTTONS */
+/* =================================
+   APPLICATION BUTTONS
+================================= */
 
 document
     .querySelectorAll(".application-card")
@@ -64,18 +68,17 @@ document
     });
 
 
-/* APPLICANT VALIDATION */
+/* =================================
+   APPLICANT VALIDATION
+================================= */
 
 function validateApplicant() {
 
     const username =
         usernameInput.value.trim();
 
-    const ageValue =
+    const ageText =
         ageInput.value.trim();
-
-    const age =
-        Number(ageValue);
 
 
     if (!username) {
@@ -90,7 +93,7 @@ function validateApplicant() {
     }
 
 
-    if (!ageValue) {
+    if (!ageText) {
 
         showError(
             "Enter your age first."
@@ -100,6 +103,10 @@ function validateApplicant() {
 
         return false;
     }
+
+
+    const age =
+        Number(ageText);
 
 
     if (
@@ -124,8 +131,6 @@ function validateApplicant() {
             "You must be at least 13 years old to apply."
         );
 
-        ageInput.focus();
-
         return false;
     }
 
@@ -134,7 +139,9 @@ function validateApplicant() {
 }
 
 
-/* OPEN APPLICATION */
+/* =================================
+   OPEN APPLICATION
+================================= */
 
 function openApplication(type) {
 
@@ -224,25 +231,34 @@ function openApplication(type) {
         "hidden"
     );
 
+
     successArea.classList.add(
         "hidden"
     );
 
 
-    setTimeout(() => {
+    setTimeout(
+        () => {
 
-        applicationArea.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
+            applicationArea.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
 
-    }, 50);
+        },
+        50
+    );
 }
 
 
-/* CREATE QUESTION */
+/* =================================
+   CREATE QUESTION
+================================= */
 
-function createQuestion(number, data) {
+function createQuestion(
+    number,
+    data
+) {
 
     const question =
         document.createElement("div");
@@ -251,12 +267,14 @@ function createQuestion(number, data) {
     question.className =
         "question";
 
+
     question.dataset.question =
         number;
 
 
     const type =
         data?.type || "text";
+
 
     const required =
         data?.required !== false;
@@ -284,7 +302,7 @@ function createQuestion(number, data) {
     }
 
 
-    /* MULTIPLE */
+    /* MULTIPLE CHOICE */
 
     else if (type === "multiple") {
 
@@ -442,12 +460,17 @@ function createQuestion(number, data) {
 }
 
 
-/* FILE VALIDATION */
+/* =================================
+   FILE VALIDATION
+================================= */
 
 function validateFiles(input) {
 
     const files =
-        Array.from(input.files);
+        Array.from(
+            input.files
+        );
+
 
     const maxSize =
         5 * 1024 * 1024;
@@ -477,6 +500,7 @@ function validateFiles(input) {
 
             return false;
         }
+
     }
 
 
@@ -484,10 +508,9 @@ function validateFiles(input) {
 
 
     const container =
-        input.parentElement
-            ?.querySelector(
-                ".selected-files"
-            );
+        input.parentElement?.querySelector(
+            ".selected-files"
+        );
 
 
     if (container) {
@@ -510,355 +533,415 @@ function validateFiles(input) {
 }
 
 
-/* FORM SUBMISSION */
-
-applicationForm.addEventListener(
-    "submit",
-    async event => {
-
-        event.preventDefault();
-
-        clearError();
-
-
-        if (!selectedApplication) {
-
-            showError(
-                "Choose an application first."
-            );
-
-            return;
-        }
-
-
-        if (!validateApplicant()) {
-            return;
-        }
-
-
-        const application =
-            window.APPLICATIONS?.[
-                selectedApplication
-            ];
-
-
-        if (!application) {
-
-            showError(
-                "Application data could not be found."
-            );
-
-            return;
-        }
-
-
-        const answers = {};
-
-
-        /* TEXT ANSWERS */
-
-        document
-            .querySelectorAll(
-                'textarea[data-type="text"]'
-            )
-            .forEach(input => {
-
-                answers[
-                    input.dataset.question
-                ] =
-                    input.value.trim();
-
-            });
-
-
-        /* MULTIPLE CHOICE */
-
-        document
-            .querySelectorAll(
-                ".choices[data-question]"
-            )
-            .forEach(group => {
-
-                const number =
-                    group.dataset.question;
-
-
-                const selected =
-                    group.querySelector(
-                        'input[type="radio"]:checked'
-                    );
-
-
-                answers[number] =
-                    selected
-                        ? selected.value
-                        : "";
-
-            });
-
-
-        /* REQUIRED QUESTIONS */
-
-        const blocks =
-            document.querySelectorAll(
-                ".question"
-            );
-
-
-        for (const block of blocks) {
-
-            const number =
-                block.dataset.question;
-
-
-            const data =
-                application.questions?.[
-                    number
-                ];
-
-
-            if (
-                !data ||
-                data.required === false
-            ) {
-                continue;
-            }
-
-
-            if (data.type === "text") {
-
-                const textarea =
-                    block.querySelector(
-                        "textarea"
-                    );
-
-
-                if (
-                    !textarea ||
-                    !textarea.value.trim()
-                ) {
-
-                    showError(
-                        "Please answer every required question."
-                    );
-
-                    textarea?.focus();
-
-                    return;
-                }
-            }
-
-
-            else if (
-                data.type === "multiple"
-            ) {
-
-                const selected =
-                    block.querySelector(
-                        'input[type="radio"]:checked'
-                    );
-
-
-                if (!selected) {
-
-                    showError(
-                        "Please answer every required question."
-                    );
-
-                    return;
-                }
-            }
-
-
-            else if (
-                data.type === "file"
-            ) {
-
-                const input =
-                    block.querySelector(
-                        ".file-input"
-                    );
-
-
-                if (
-                    !input ||
-                    input.files.length === 0
-                ) {
-
-                    showError(
-                        "Please upload all required files."
-                    );
-
-                    return;
-                }
-            }
-        }
-
-
-        /* TOTAL FILE COUNT */
-
-        const fileInputs =
-            document.querySelectorAll(
-                ".file-input"
-            );
-
-
-        let totalFiles = 0;
-
-
-        for (const input of fileInputs) {
-
-            totalFiles +=
-                input.files.length;
-
-        }
-
-
-        if (totalFiles > 10) {
-
-            showError(
-                "You can upload a maximum of 10 files per application."
-            );
-
-            return;
-        }
-
-
-        /* BUILD REQUEST */
-
-        const formData =
-            new FormData();
-
-
-        formData.append(
-            "username",
-            usernameInput.value.trim()
-        );
-
-
-        formData.append(
-            "age",
-            String(
-                Number(ageInput.value)
-            )
-        );
-
-
-        formData.append(
-            "applicationType",
-            selectedApplication
-        );
-
-
-        formData.append(
-            "answers",
-            JSON.stringify(answers)
-        );
-
-
-        /* FILES */
-
-        for (const input of fileInputs) {
-
-            const questionNumber =
-                input.dataset.question;
-
-
-            for (const file of input.files) {
-
-                formData.append(
-                    `file_${questionNumber}`,
-                    file,
-                    file.name
-                );
-
-            }
-        }
-
-
-        /* SEND */
-
-        submitButton.disabled =
-            true;
-
-        submitButton.textContent =
-            "Submitting...";
-
-
-        try {
-
-            const response =
-                await fetch(
-                    WORKER_URL,
-                    {
-                        method: "POST",
-                        body: formData
-                    }
-                );
-
-
-            const result =
-                await response
-                    .json()
-                    .catch(
-                        () => ({})
-                    );
-
-
-            if (!response.ok) {
-
-                throw new Error(
-                    result.error ||
-                    "Failed to submit application."
-                );
-            }
-
-
-            applicationID.textContent =
-                result.applicationId ||
-                "Unknown";
-
-
-            applicationArea.classList.add(
-                "hidden"
-            );
-
-
-            successArea.classList.remove(
-                "hidden"
-            );
-
-
-            successArea.scrollIntoView({
-                behavior: "smooth",
-                block: "center"
-            });
-
-
-        }
-        catch (error) {
-
-            showError(
-                error.message ||
-                "Something went wrong."
-            );
-
-        }
-        finally {
-
-            submitButton.disabled =
-                false;
-
-            submitButton.textContent =
-                "Submit Application";
-
-        }
-
-    }
+/* =================================
+   SUBMIT
+================================= */
+
+submitButton.addEventListener(
+    "click",
+    submitApplication
 );
 
 
-/* HELPERS */
+async function submitApplication() {
+
+    clearError();
+
+
+    if (!selectedApplication) {
+
+        showError(
+            "Choose an application first."
+        );
+
+        return;
+    }
+
+
+    if (!validateApplicant()) {
+        return;
+    }
+
+
+    const application =
+        window.APPLICATIONS?.[
+            selectedApplication
+        ];
+
+
+    if (!application) {
+
+        showError(
+            "Application data could not be found."
+        );
+
+        return;
+    }
+
+
+    const answers = {};
+
+
+    /* TEXT */
+
+    document
+        .querySelectorAll(
+            'textarea[data-type="text"]'
+        )
+        .forEach(input => {
+
+            answers[
+                input.dataset.question
+            ] =
+                input.value.trim();
+
+        });
+
+
+    /* MULTIPLE CHOICE */
+
+    document
+        .querySelectorAll(
+            ".choices[data-question]"
+        )
+        .forEach(group => {
+
+            const number =
+                group.dataset.question;
+
+
+            const selected =
+                group.querySelector(
+                    'input[type="radio"]:checked'
+                );
+
+
+            answers[number] =
+                selected
+                    ? selected.value
+                    : "";
+
+        });
+
+
+    /* REQUIRED QUESTIONS */
+
+    const questionBlocks =
+        document.querySelectorAll(
+            ".question"
+        );
+
+
+    for (
+        const block
+        of questionBlocks
+    ) {
+
+        const number =
+            block.dataset.question;
+
+
+        const data =
+            application.questions?.[
+                number
+            ];
+
+
+        if (
+            !data ||
+            data.required === false
+        ) {
+            continue;
+        }
+
+
+        if (
+            data.type ===
+            "text"
+        ) {
+
+            const textarea =
+                block.querySelector(
+                    "textarea"
+                );
+
+
+            if (
+                !textarea ||
+                !textarea.value.trim()
+            ) {
+
+                showError(
+                    "Please answer every required question."
+                );
+
+                textarea?.focus();
+
+                return;
+            }
+        }
+
+
+        else if (
+            data.type ===
+            "multiple"
+        ) {
+
+            const selected =
+                block.querySelector(
+                    'input[type="radio"]:checked'
+                );
+
+
+            if (!selected) {
+
+                showError(
+                    "Please answer every required question."
+                );
+
+                return;
+            }
+        }
+
+
+        else if (
+            data.type ===
+            "file"
+        ) {
+
+            const input =
+                block.querySelector(
+                    ".file-input"
+                );
+
+
+            if (
+                !input ||
+                input.files.length === 0
+            ) {
+
+                showError(
+                    "Please upload all required files."
+                );
+
+                return;
+            }
+        }
+    }
+
+
+    /* FILE COUNT */
+
+    const fileInputs =
+        document.querySelectorAll(
+            ".file-input"
+        );
+
+
+    let totalFiles = 0;
+
+
+    for (
+        const input
+        of fileInputs
+    ) {
+
+        const files =
+            Array.from(
+                input.files
+            );
+
+
+        totalFiles +=
+            files.length;
+
+
+        for (
+            const file
+            of files
+        ) {
+
+            if (
+                file.size >
+                5 * 1024 * 1024
+            ) {
+
+                showError(
+                    `"${file.name}" is larger than 5 MB.`
+                );
+
+                return;
+            }
+        }
+    }
+
+
+    if (
+        totalFiles >
+        10
+    ) {
+
+        showError(
+            "You can upload a maximum of 10 files per application."
+        );
+
+        return;
+    }
+
+
+    /* FORM DATA */
+
+    const formData =
+        new FormData();
+
+
+    formData.append(
+        "username",
+        usernameInput.value.trim()
+    );
+
+
+    formData.append(
+        "age",
+        String(
+            Number(
+                ageInput.value
+            )
+        )
+    );
+
+
+    formData.append(
+        "applicationType",
+        selectedApplication
+    );
+
+
+    formData.append(
+        "answers",
+        JSON.stringify(
+            answers
+        )
+    );
+
+
+    /* FILES */
+
+    for (
+        const input
+        of fileInputs
+    ) {
+
+        const questionNumber =
+            input.dataset.question;
+
+
+        for (
+            const file
+            of input.files
+        ) {
+
+            formData.append(
+                `file_${questionNumber}`,
+                file,
+                file.name
+            );
+
+        }
+    }
+
+
+    /* BUTTON */
+
+    submitButton.disabled =
+        true;
+
+    submitButton.textContent =
+        "Submitting...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                WORKER_URL,
+                {
+                    method:
+                        "POST",
+
+                    body:
+                        formData
+                }
+            );
+
+
+        const result =
+            await response
+                .json()
+                .catch(
+                    () => ({})
+                );
+
+
+        if (
+            !response.ok
+        ) {
+
+            throw new Error(
+                result.error ||
+                "Failed to submit application."
+            );
+        }
+
+
+        applicationID.textContent =
+            result.applicationId ||
+            "Unknown";
+
+
+        applicationArea.classList.add(
+            "hidden"
+        );
+
+
+        successArea.classList.remove(
+            "hidden"
+        );
+
+
+        successArea.scrollIntoView({
+            behavior: "smooth",
+            block: "center"
+        });
+
+    }
+
+
+    catch (error) {
+
+        showError(
+            error.message ||
+            "Something went wrong."
+        );
+
+    }
+
+
+    finally {
+
+        submitButton.disabled =
+            false;
+
+        submitButton.textContent =
+            "Submit Application";
+
+    }
+}
+
+
+/* =================================
+   HELPERS
+================================= */
 
 function formatSize(bytes) {
 
