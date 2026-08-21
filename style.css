@@ -1,25 +1,25 @@
 :root {
     font-family: Inter, Arial, Helvetica, sans-serif;
 
-    --background: #0a0b0e;
+    --background: #090a0d;
     --surface: #101217;
-    --surface-2: #14161c;
-    --surface-3: #191c23;
+    --surface-hover: #14171d;
+    --input: #0c0e12;
 
     --border: #252932;
-    --border-hover: #343944;
+    --border-hover: #353a44;
 
     --text: #f1f2f4;
     --muted: #8b919d;
-    --muted-2: #666c77;
+    --muted-dark: #626873;
 
     --purple: #8b5cf6;
-    --purple-soft: #a78bfa;
+    --purple-hover: #a78bfa;
 
     --green: #22c55e;
-    --green-dark: #15351f;
+    --green-hover: #2bd267;
 
-    --danger: #ef596d;
+    --red: #ef596d;
 }
 
 * {
@@ -36,9 +36,9 @@ body {
 
     background:
         radial-gradient(
-            circle at 15% 0%,
-            rgba(139, 92, 246, 0.055),
-            transparent 32%
+            circle at 20% 0%,
+            rgba(139, 92, 246, .055),
+            transparent 30%
         ),
         var(--background);
 
@@ -51,34 +51,23 @@ textarea {
     font: inherit;
 }
 
-.background-glow {
-    display: none;
-}
-
-
-/* -------------------------
-   PAGE
-------------------------- */
-
 main {
-    position: relative;
-
-    width: min(900px, calc(100% - 32px));
+    width: min(900px, calc(100% - 30px));
 
     margin: 0 auto;
 
-    padding: 56px 0 100px;
+    padding: 55px 0 90px;
 }
 
 
-/* -------------------------
-   HEADER
-------------------------- */
+/*
+    HEADER
+*/
 
 header {
-    max-width: 650px;
+    max-width: 680px;
 
-    margin: 0 auto 34px;
+    margin: 0 auto 32px;
 
     text-align: center;
 }
@@ -87,7 +76,7 @@ header {
     display: inline-flex;
     align-items: center;
 
-    min-height: 25px;
+    min-height: 24px;
 
     padding: 0 9px;
 
@@ -107,13 +96,10 @@ header {
 header h1 {
     margin: 13px 0 8px;
 
-    color: #f5f5f6;
-
-    font-size: 40px;
+    font-size: 39px;
     font-weight: 700;
 
-    letter-spacing: -1.4px;
-    line-height: 1.1;
+    letter-spacing: -1.5px;
 }
 
 header p {
@@ -121,68 +107,91 @@ header p {
 
     color: var(--muted);
 
-    font-size: 14px;
-    line-height: 1.6;
+    font-size: 13px;
+    line-height: 1.5;
 }
 
 
-/* -------------------------
-   USERNAME
-------------------------- */
+/*
+    APPLICANT INFO
+*/
 
-.username-box {
-    margin: 0 auto 28px;
+.applicant-info {
+    display: grid;
 
-    padding: 17px;
+    grid-template-columns:
+        minmax(0, 1fr)
+        135px;
 
-    border: 1px solid var(--border);
-    border-radius: 8px;
+    gap: 9px;
 
-    background: var(--surface);
+    margin-top: 25px;
 
     text-align: left;
 }
 
-.username-box label {
+.username-box,
+.age-box {
+    padding: 16px;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    background: var(--surface);
+}
+
+.username-box label,
+.age-box label {
     display: block;
 
     margin-bottom: 7px;
 
     color: #e5e7eb;
 
-    font-size: 13px;
-    font-weight: 600;
+    font-size: 12px;
+    font-weight: 650;
 }
 
-.username-box::after {
-    content: "Use your Roblox username, not your display name.";
-
+.username-box small,
+.age-box small {
     display: block;
 
     margin-top: 7px;
 
-    color: var(--muted-2);
+    color: var(--muted-dark);
 
-    font-size: 11px;
+    font-size: 10px;
 }
 
-.username {
-    display: block;
+.input-wrap {
+    position: relative;
+}
 
+.input-prefix {
+    position: absolute;
+
+    left: 12px;
+    top: 50%;
+
+    transform: translateY(-50%);
+
+    color: #676d78;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    pointer-events: none;
+}
+
+.username,
+.age {
     width: 100%;
-    height: 43px;
-
-    padding: 0 13px 0 40px;
+    height: 42px;
 
     border: 1px solid #292d36;
     border-radius: 6px;
 
-    background:
-        linear-gradient(
-            90deg,
-            #15171d,
-            #0d0f13
-        );
+    background: var(--input);
 
     color: #f5f5f5;
 
@@ -191,54 +200,40 @@ header p {
     font-size: 13px;
 
     transition:
-        border-color .15s ease,
-        background .15s ease,
-        box-shadow .15s ease;
+        border-color .15s,
+        box-shadow .15s;
 }
 
-.username-box {
-    position: relative;
+.username {
+    padding: 0 12px 0 31px;
 }
 
-.username-box::before {
-    content: "@";
-
-    position: absolute;
-
-    left: 31px;
-    top: 47px;
-
-    z-index: 2;
-
-    color: #747b88;
-
-    font-size: 14px;
-    font-weight: 600;
-
-    pointer-events: none;
+.age {
+    padding: 0 12px;
 }
 
-.username::placeholder {
-    color: #565c67;
+.username::placeholder,
+.age::placeholder {
+    color: #555b66;
 }
 
-.username:hover {
+.username:hover,
+.age:hover {
     border-color: var(--border-hover);
 }
 
-.username:focus {
+.username:focus,
+.age:focus {
     border-color: #7650d4;
 
-    background: #101218;
-
     box-shadow:
-        0 0 0 3px rgba(139, 92, 246, .08);
+        0 0 0 3px rgba(139, 92, 246, .07);
 }
 
 
-/* -------------------------
-   APPLICATION BUTTONS
-------------------------- */
+/*
+    APPLICATION BUTTONS
+*/
 
 .application-buttons {
     display: grid;
@@ -250,9 +245,7 @@ header p {
 }
 
 .application-card {
-    position: relative;
-
-    min-height: 125px;
+    min-height: 128px;
 
     padding: 17px;
 
@@ -271,13 +264,13 @@ header p {
     flex-direction: column;
 
     transition:
-        background .15s ease,
-        border-color .15s ease,
-        transform .15s ease;
+        background .15s,
+        border-color .15s,
+        transform .15s;
 }
 
 .application-card:hover {
-    background: var(--surface-2);
+    background: var(--surface-hover);
 
     border-color: var(--border-hover);
 
@@ -289,28 +282,28 @@ header p {
 }
 
 .card-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    display: grid;
+    place-items: center;
 
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 28px;
 
-    margin-bottom: 16px;
+    margin-bottom: 17px;
 
-    border: 1px solid #2b2f38;
-    border-radius: 6px;
+    border: 1px solid #2d3139;
+    border-radius: 5px;
 
     background: #15171c;
 
-    color: #b8bdc8;
+    color: #aeb3bd;
 
-    font-size: 15px;
+    font-size: 9px;
+    font-weight: 750;
+
+    letter-spacing: .06em;
 }
 
 .card-title {
-    color: #eeeeef;
-
     font-size: 14px;
     font-weight: 650;
 }
@@ -325,25 +318,22 @@ header p {
 }
 
 
-/* -------------------------
-   APPLICATION AREA
-------------------------- */
+/*
+    APPLICATION
+*/
 
 .application-area {
-    margin-top: 32px;
+    margin-top: 31px;
 }
 
 .application-heading {
-    margin-bottom: 16px;
+    margin-bottom: 17px;
 }
 
 .application-heading h2 {
-    margin: 0 0 5px;
-
-    color: #f0f1f3;
+    margin: 10px 0 4px;
 
     font-size: 25px;
-    font-weight: 700;
 
     letter-spacing: -.5px;
 }
@@ -357,14 +347,14 @@ header p {
 }
 
 
-/* -------------------------
-   QUESTIONS
-------------------------- */
+/*
+    QUESTIONS
+*/
 
 .question {
     margin-bottom: 9px;
 
-    padding: 17px 18px;
+    padding: 17px;
 
     border: 1px solid var(--border);
     border-radius: 7px;
@@ -375,12 +365,12 @@ header p {
 .question-number {
     margin-bottom: 7px;
 
-    color: #8f72dc;
+    color: #9276dc;
 
-    font-size: 10px;
+    font-size: 9px;
     font-weight: 700;
 
-    letter-spacing: .06em;
+    letter-spacing: .07em;
     text-transform: uppercase;
 }
 
@@ -400,28 +390,27 @@ header p {
 
     padding: 9px 11px;
 
-    border: 1px solid #20232a;
     border-left: 2px solid #55417e;
-    border-radius: 4px;
+    border-radius: 3px;
 
     background: #0d0f13;
 
-    color: #747b87;
+    color: #737985;
 
     font-size: 11px;
-    line-height: 1.5;
+    line-height: 1.45;
 }
 
 
-/* -------------------------
-   TEXT INPUT
-------------------------- */
+/*
+    TEXTAREA
+*/
 
 textarea {
     display: block;
 
     width: 100%;
-    min-height: 108px;
+    min-height: 105px;
 
     padding: 11px 12px;
 
@@ -430,18 +419,18 @@ textarea {
     border: 1px solid #292d35;
     border-radius: 6px;
 
-    background: #0c0e12;
+    background: var(--input);
 
     color: #f3f4f6;
 
     outline: none;
 
-    font-size: 13px;
+    font-size: 12px;
     line-height: 1.5;
 
     transition:
-        border-color .15s ease,
-        box-shadow .15s ease;
+        border-color .15s,
+        box-shadow .15s;
 }
 
 textarea::placeholder {
@@ -449,7 +438,7 @@ textarea::placeholder {
 }
 
 textarea:hover {
-    border-color: #333842;
+    border-color: #353a43;
 }
 
 textarea:focus {
@@ -460,9 +449,9 @@ textarea:focus {
 }
 
 
-/* -------------------------
-   MULTIPLE CHOICE
-------------------------- */
+/*
+    MULTIPLE CHOICE
+*/
 
 .choices {
     display: flex;
@@ -473,8 +462,6 @@ textarea:focus {
 }
 
 .choice {
-    position: relative;
-
     display: flex;
     align-items: center;
 
@@ -496,8 +483,8 @@ textarea:focus {
     font-size: 12px;
 
     transition:
-        background .12s ease,
-        border-color .12s ease;
+        background .12s,
+        border-color .12s;
 }
 
 .choice:hover {
@@ -521,14 +508,12 @@ textarea:focus {
     margin: 0;
 
     accent-color: var(--purple);
-
-    cursor: pointer;
 }
 
 
-/* -------------------------
-   FILE UPLOAD
-------------------------- */
+/*
+    FILES
+*/
 
 .file-upload {
     padding: 12px;
@@ -536,17 +521,7 @@ textarea:focus {
     border: 1px dashed #30343d;
     border-radius: 6px;
 
-    background: #0c0e12;
-
-    transition:
-        border-color .15s ease,
-        background .15s ease;
-}
-
-.file-upload:hover {
-    border-color: #454a55;
-
-    background: #101218;
+    background: var(--input);
 }
 
 .file-input {
@@ -554,11 +529,11 @@ textarea:focus {
 
     color: var(--muted);
 
-    font-size: 12px;
+    font-size: 11px;
 }
 
 .file-input::file-selector-button {
-    margin-right: 9px;
+    margin-right: 8px;
 
     padding: 7px 10px;
 
@@ -571,11 +546,7 @@ textarea:focus {
 
     cursor: pointer;
 
-    font-size: 11px;
-}
-
-.file-input::file-selector-button:hover {
-    background: #1d2027;
+    font-size: 10px;
 }
 
 .file-help {
@@ -584,7 +555,6 @@ textarea:focus {
     color: #696f7a;
 
     font-size: 10px;
-    line-height: 1.4;
 }
 
 .selected-files {
@@ -593,13 +563,14 @@ textarea:focus {
     color: #aeb3bd;
 
     font-size: 11px;
+
     line-height: 1.7;
 }
 
 
-/* -------------------------
-   SUBMIT
-------------------------- */
+/*
+    SUBMIT
+*/
 
 .submit-area {
     margin-top: 16px;
@@ -610,24 +581,21 @@ textarea:focus {
 
     margin-bottom: 7px;
 
-    color: var(--danger);
+    color: var(--red);
 
     font-size: 11px;
 }
 
 .submit-button {
     width: 100%;
-
     min-height: 44px;
-
-    padding: 0 14px;
 
     border: 1px solid #2da353;
     border-radius: 6px;
 
-    background: #20a94f;
+    background: var(--green);
 
-    color: #fff;
+    color: white;
 
     font-size: 12px;
     font-weight: 700;
@@ -635,15 +603,12 @@ textarea:focus {
     cursor: pointer;
 
     transition:
-        background .15s ease,
-        border-color .15s ease,
-        transform .1s ease;
+        background .15s,
+        transform .1s;
 }
 
 .submit-button:hover {
-    background: #25b956;
-
-    border-color: #35c765;
+    background: var(--green-hover);
 }
 
 .submit-button:active {
@@ -654,17 +619,15 @@ textarea:focus {
     opacity: .5;
 
     cursor: not-allowed;
-
-    transform: none;
 }
 
 
-/* -------------------------
-   SUCCESS
-------------------------- */
+/*
+    SUCCESS
+*/
 
 .success-area {
-    margin-top: 22px;
+    margin-top: 23px;
 
     padding: 38px 20px;
 
@@ -683,7 +646,7 @@ textarea:focus {
     width: 48px;
     height: 48px;
 
-    margin: 0 auto;
+    margin: auto;
 
     border: 1px solid #286039;
     border-radius: 50%;
@@ -699,55 +662,52 @@ textarea:focus {
 .success-area h2 {
     margin: 14px 0 5px;
 
-    color: #eaf3ed;
-
     font-size: 21px;
 }
 
 .success-area p {
-    margin: 0;
+    margin: 4px 0;
 
     color: var(--muted);
 
     font-size: 12px;
-    line-height: 1.5;
 }
 
 
-/* -------------------------
-   HIDDEN
-------------------------- */
+/*
+    HIDDEN
+*/
 
 .hidden {
     display: none !important;
 }
 
 
-/* -------------------------
-   MOBILE
-------------------------- */
+/*
+    MOBILE
+*/
 
 @media (max-width: 700px) {
 
     main {
-        width: min(100% - 20px, 600px);
+        width: calc(100% - 20px);
 
         padding-top: 35px;
-    }
-
-    header {
-        margin-bottom: 25px;
     }
 
     header h1 {
         font-size: 32px;
     }
 
-    header p {
-        font-size: 13px;
+    .application-buttons {
+        grid-template-columns: 1fr;
     }
 
-    .application-buttons {
+}
+
+@media (max-width: 500px) {
+
+    .applicant-info {
         grid-template-columns: 1fr;
     }
 
@@ -759,32 +719,4 @@ textarea:focus {
         padding: 15px;
     }
 
-    .username-box {
-        padding: 15px;
-    }
-
-    .username-box::before {
-        left: 29px;
-    }
-}
-
-@media (max-width: 420px) {
-
-    main {
-        width: calc(100% - 16px);
-
-        padding-top: 25px;
-    }
-
-    header h1 {
-        font-size: 28px;
-    }
-
-    .question {
-        padding: 14px;
-    }
-
-    .submit-button {
-        min-height: 46px;
-    }
 }
