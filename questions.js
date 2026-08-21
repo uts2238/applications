@@ -921,7 +921,6 @@ window.APPLICATIONS = {
                     ".mov",
                     ".webm"
                 ]
-            }
 
         }
 
