@@ -3,17 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Applications</title>
 
-    <link
-        rel="stylesheet"
-        href="style.css"
-    >
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -31,7 +25,6 @@
         <p>
             Fill in your details and choose an application below.
         </p>
-
 
         <div class="applicant-panel">
 
@@ -53,7 +46,6 @@
 
             </div>
 
-
             <div class="applicant-fields">
 
                 <div class="applicant-field">
@@ -73,7 +65,6 @@
 
                 </div>
 
-
                 <div class="applicant-field age-field">
 
                     <label for="age">
@@ -84,7 +75,7 @@
                         id="age"
                         type="number"
                         min="1"
-                        max="99"
+                        max="120"
                         placeholder="Age"
                         inputmode="numeric"
                         autocomplete="off"
@@ -93,7 +84,6 @@
                 </div>
 
             </div>
-
 
             <div class="applicant-note">
                 You must be at least 13 years old to submit an application.
@@ -104,17 +94,14 @@
     </header>
 
 
-    <!-- APPLICATIONS -->
-
     <section class="application-buttons">
 
-
-        <!-- CC -->
+        <!-- CONTENT CREATOR -->
 
         <button
             class="application-card"
             type="button"
-            data-application="partner"
+            data-application="cc"
         >
 
             <span class="card-icon">
@@ -122,17 +109,17 @@
             </span>
 
             <span class="card-title">
-                Partner
+                Content Creator
             </span>
 
             <span class="card-description">
-                Apply to partner with the community.
+                Create videos, Shorts and other content featuring the game.
             </span>
 
         </button>
 
 
-        <!-- DEV -->
+        <!-- DEVELOPER -->
 
         <button
             class="application-card"
@@ -149,13 +136,13 @@
             </span>
 
             <span class="card-description">
-                Help develop and improve the project.
+                Help develop and improve the game.
             </span>
 
         </button>
 
 
-        <!-- MOD -->
+        <!-- MODERATOR -->
 
         <button
             class="application-card"
@@ -195,18 +182,18 @@
             </span>
 
             <span class="card-description">
-                Help maintain accurate values and trades.
+                Help maintain accurate values and trading information.
             </span>
 
         </button>
 
 
-        <!-- TEST -->
+        <!-- TESTER -->
 
         <button
             class="application-card"
             type="button"
-            data-application="tester"
+            data-application="test"
         >
 
             <span class="card-icon">
@@ -218,15 +205,13 @@
             </span>
 
             <span class="card-description">
-                Find bugs and test new features.
+                Find bugs, test updates and help improve the game.
             </span>
 
         </button>
 
     </section>
 
-
-    <!-- APPLICATION FORM -->
 
     <section
         id="applicationArea"
@@ -248,9 +233,7 @@
 
 
         <form id="applicationForm">
-
-            <div id="questionsContainer"></div>
-
+            <!-- Questions are inserted here -->
         </form>
 
 
@@ -264,7 +247,8 @@
             <button
                 id="submitButton"
                 class="submit-button"
-                type="button"
+                type="submit"
+                form="applicationForm"
             >
                 Submit Application
             </button>
@@ -273,8 +257,6 @@
 
     </section>
 
-
-    <!-- SUCCESS -->
 
     <section
         id="successArea"
