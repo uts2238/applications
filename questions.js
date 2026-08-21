@@ -746,176 +746,178 @@ window.APPLICATIONS = {
         =========================
     */
 
-    cc: {
+cc: {
 
-        title: "Content Creator Application",
-        badge: "CC",
+    title: "Content Creator Application",
+    badge: "CC",
 
-        questions: {
+    questions: {
 
-            ["1"]: {
-                type: "text",
-                required: true,
-                question: "What kind of content do you make?",
-                example: "Example: I make Roblox gameplay videos, updates and short-form content."
-            },
+        ["1"]: {
+            type: "text",
+            required: true,
+            question: "What kind of content do you create?",
+            example: "Example: I make Roblox gameplay videos, update videos, shorts and guides."
+        },
 
-            ["2"]: {
-                type: "text",
-                required: true,
-                question: "Where do you currently post your content?",
-                example: "Example: YouTube and TikTok."
-            },
+        ["2"]: {
+            type: "text",
+            required: true,
+            question: "What platforms do you post on?",
+            example: "Example: YouTube and TikTok."
+        },
 
-            ["3"]: {
-                type: "text",
-                required: true,
-                question: "Send your main content channel or profile.",
-                example: "Example: Your YouTube, TikTok, Twitch or other creator profile."
-            },
+        ["3"]: {
+            type: "text",
+            required: true,
+            question: "What is your main channel or profile?",
+            example: "Example: Your YouTube, TikTok, Twitch or other creator profile."
+        },
 
-            ["4"]: {
-                type: "multiple",
-                required: true,
-                question: "How often do you normally upload?",
-                choices: [
-                    "Less than once a week",
-                    "1-2 times a week",
-                    "3-6 times a week",
-                    "Daily"
-                ]
-            },
+        ["4"]: {
+            type: "multiple",
+            required: true,
+            question: "How often do you upload?",
+            choices: [
+                "Less than once a week",
+                "1-2 times a week",
+                "3-6 times a week",
+                "Daily"
+            ]
+        },
 
-            ["5"]: {
-                type: "text",
-                required: true,
-                question: "What is your usual average number of views per post?",
-                example: "Example: Most of my videos get around 2,000-5,000 views."
-            },
+        ["5"]: {
+            type: "text",
+            required: true,
+            question: "How many followers or subscribers do you currently have?",
+            example: "Example: 8,500 YouTube subscribers."
+        },
 
-            ["6"]: {
-                type: "text",
-                required: true,
-                question: "What is your current follower or subscriber count?",
-                example: "Example: 8,500 YouTube subscribers."
-            },
+        ["6"]: {
+            type: "text",
+            required: true,
+            question: "What is your usual view count per video or post?",
+            example: "Example: My videos usually get between 2,000 and 5,000 views."
+        },
 
-            ["7"]: {
-                type: "text",
-                required: true,
-                question: "What type of audience watches your content?",
-                example: "Example: Mostly Roblox players interested in tower defense games."
-            },
+        ["7"]: {
+            type: "text",
+            required: true,
+            question: "Who is your main audience?",
+            example: "Example: Mostly Roblox players who enjoy tower defense games."
+        },
 
-            ["8"]: {
-                type: "text",
-                required: true,
-                question: "Why do you want to create content for us?",
-                example: "Example: I already make content in this community and think I could help bring more players in."
-            },
+        ["8"]: {
+            type: "text",
+            required: true,
+            question: "What made you want to become a creator for us?",
+            example: "Example: I already enjoy the game and think I'd be able to make entertaining content around it."
+        },
 
-            ["9"]: {
-                type: "text",
-                required: true,
-                question: "What kind of content would you make about the game or community?",
-                example: "Example: Update videos, gameplay, guides, challenges and short clips."
-            },
+        ["9"]: {
+            type: "text",
+            required: true,
+            question: "What type of content would you make featuring us?",
+            example: "Example: Gameplay videos, update coverage, guides, challenges and short clips."
+        },
 
-            ["10"]: {
-                type: "multiple",
-                required: true,
-                question: "Which platform is your strongest?",
-                choices: [
-                    "YouTube",
-                    "TikTok",
-                    "Twitch",
-                    "Other"
-                ]
-            },
+        ["10"]: {
+            type: "multiple",
+            required: true,
+            question: "Which platform is your strongest?",
+            choices: [
+                "YouTube",
+                "TikTok",
+                "Twitch",
+                "Other"
+            ]
+        },
 
-            ["11"]: {
-                type: "text",
-                required: true,
-                question: "What do you think makes a video perform well?",
-                example: "Example: A strong opening, good editing, a clear idea and keeping viewers interested."
-            },
+        ["11"]: {
+            type: "text",
+            required: true,
+            question: "What do you think makes content enjoyable to watch?",
+            example: "Example: A good hook, entertaining commentary, pacing and editing."
+        },
 
-            ["12"]: {
-                type: "text",
-                required: true,
-                question: "How comfortable are you promoting something to your audience?",
-                example: "Example: I'm comfortable mentioning updates, events and new content naturally in my videos."
-            },
+        ["12"]: {
+            type: "text",
+            required: true,
+            question: "How comfortable are you recording yourself or providing commentary?",
+            example: "Example: I'm comfortable doing voice commentary in my videos."
+        },
 
-            ["13"]: {
-                type: "text",
-                required: true,
-                question: "Have you worked with another game, server or community as a creator before?",
-                example: "Example: Yes, I've previously made sponsored videos for two Roblox games."
-            },
+        ["13"]: {
+            type: "text",
+            required: true,
+            question: "Have you created content for another game before?",
+            example: "Example: Yes, I've made videos for several Roblox games."
+        },
 
-            ["14"]: {
-                type: "text",
-                required: true,
-                question: "What would you do if a sponsored or requested video performed badly?",
-                example: "Example: I'd look at what went wrong and try a different approach rather than giving up."
-            },
+        ["14"]: {
+            type: "text",
+            required: true,
+            question: "What is the best-performing piece of content you've made?",
+            example: "Example: A Roblox update video that reached 50,000 views."
+        },
 
-            ["15"]: {
-                type: "multiple",
-                required: true,
-                question: "How comfortable are you editing your own content?",
-                choices: [
-                    "I don't edit",
-                    "Basic editing",
-                    "Comfortable editing",
-                    "Advanced editing"
-                ]
-            },
+        ["15"]: {
+            type: "multiple",
+            required: true,
+            question: "How would you rate your editing skills?",
+            choices: [
+                "Basic",
+                "Decent",
+                "Good",
+                "Advanced"
+            ]
+        },
 
-            ["16"]: {
-                type: "text",
-                required: true,
-                question: "What makes your content different from other creators?",
-                example: "Example: I focus on fast-paced videos and try to make each video have a clear idea."
-            },
+        ["16"]: {
+            type: "text",
+            required: true,
+            question: "What makes your content different from other creators?",
+            example: "Example: I focus on fast-paced videos and try to keep every video entertaining."
+        },
 
-            ["17"]: {
-                type: "text",
-                required: true,
-                question: "How would you handle negative comments about the game or community?",
-                example: "Example: I'd avoid unnecessary arguments and respond professionally when a response is actually needed."
-            },
+        ["17"]: {
+            type: "text",
+            required: true,
+            question: "How do you normally come up with ideas for new content?",
+            example: "Example: I look at updates, community trends and things I think my audience would enjoy."
+        },
 
-            ["18"]: {
-                type: "text",
-                required: true,
-                question: "How active are you on social media outside of uploading?",
-                example: "Example: I'm active every day and regularly interact with comments and my community."
-            },
+        ["18"]: {
+            type: "text",
+            required: true,
+            question: "How do you handle negative comments or criticism?",
+            example: "Example: I don't take it personally and use useful criticism to improve my content."
+        },
 
-            ["19"]: {
-                type: "text",
-                required: true,
-                question: "Why should we choose you as a content creator?",
-                example: "Example: I have an active audience that already enjoys this type of content and I'm consistent with uploads."
-            },
+        ["19"]: {
+            type: "text",
+            required: true,
+            question: "Why should we choose you as a content creator?",
+            example: "Example: I consistently upload, have an active audience and enjoy making this type of content."
+        },
 
-            ["20"]: {
-                type: "file",
-                required: false,
-                question: "Upload examples of your best content.",
-                example: "You can upload screenshots, videos or other examples of your work.",
-                accept: [
-                    "image/*",
-                    "video/*",
-                    ".mp4",
-                    ".mov",
-                    ".webm"
-                ]
-            }
-
+        ["20"]: {
+            type: "file",
+            required: false,
+            question: "Upload examples of your content.",
+            example: "Screenshots, videos or other examples of your work are optional.",
+            accept: [
+                "image/*",
+                "video/*",
+                ".mp4",
+                ".mov",
+                ".webm"
+            ]
         }
+
+    }
+
+}
 
     }
 
