@@ -5,9 +5,7 @@ const WORKER_URL =
 let selectedApplication = null;
 
 
-/*
-    ELEMENTS
-*/
+/* ELEMENTS */
 
 const usernameInput =
     document.getElementById("username");
@@ -42,21 +40,22 @@ const submitButton =
 const successArea =
     document.getElementById("successArea");
 
+const applicationID =
+    document.getElementById("applicationID");
 
-/*
-    APPLICATION BUTTONS
-*/
+
+/* APPLICATION BUTTONS */
 
 document
     .querySelectorAll(".application-card")
-    .forEach(button => {
+    .forEach(card => {
 
-        button.addEventListener(
+        card.addEventListener(
             "click",
             () => {
 
                 openApplication(
-                    button.dataset.application
+                    card.dataset.application
                 );
 
             }
@@ -65,17 +64,18 @@ document
     });
 
 
-/*
-    VALIDATE APPLICANT
-*/
+/* APPLICANT VALIDATION */
 
 function validateApplicant() {
 
     const username =
         usernameInput.value.trim();
 
+    const ageValue =
+        ageInput.value.trim();
+
     const age =
-        Number(ageInput.value);
+        Number(ageValue);
 
 
     if (!username) {
@@ -90,7 +90,7 @@ function validateApplicant() {
     }
 
 
-    if (!ageInput.value.trim()) {
+    if (!ageValue) {
 
         showError(
             "Enter your age first."
@@ -131,13 +131,10 @@ function validateApplicant() {
 
 
     return true;
-
 }
 
 
-/*
-    OPEN APPLICATION
-*/
+/* OPEN APPLICATION */
 
 function openApplication(type) {
 
@@ -159,11 +156,6 @@ function openApplication(type) {
             "This application could not be found."
         );
 
-        console.error(
-            "Missing application:",
-            type
-        );
-
         return;
     }
 
@@ -172,11 +164,6 @@ function openApplication(type) {
         Object.entries(
             application.questions || {}
         );
-
-
-    console.log(
-        `${application.title}: ${questions.length} questions loaded`
-    );
 
 
     if (!questions.length) {
@@ -237,7 +224,6 @@ function openApplication(type) {
         "hidden"
     );
 
-
     successArea.classList.add(
         "hidden"
     );
@@ -251,18 +237,12 @@ function openApplication(type) {
         });
 
     }, 50);
-
 }
 
 
-/*
-    CREATE QUESTION
-*/
+/* CREATE QUESTION */
 
-function createQuestion(
-    number,
-    data
-) {
+function createQuestion(number, data) {
 
     const question =
         document.createElement("div");
@@ -271,14 +251,12 @@ function createQuestion(
     question.className =
         "question";
 
-
     question.dataset.question =
         number;
 
 
     const type =
         data?.type || "text";
-
 
     const required =
         data?.required !== false;
@@ -287,9 +265,7 @@ function createQuestion(
     let content = "";
 
 
-    /*
-        TEXT
-    */
+    /* TEXT */
 
     if (type === "text") {
 
@@ -305,13 +281,10 @@ function createQuestion(
             ></textarea>
 
         `;
-
     }
 
 
-    /*
-        MULTIPLE CHOICE
-    */
+    /* MULTIPLE */
 
     else if (type === "multiple") {
 
@@ -354,13 +327,10 @@ function createQuestion(
             </div>
 
         `;
-
     }
 
 
-    /*
-        FILE
-    */
+    /* FILE */
 
     else if (type === "file") {
 
@@ -386,7 +356,7 @@ function createQuestion(
                 >
 
                 <div class="file-help">
-                    Maximum 5 MB per file · Maximum 10 files
+                    Maximum 5 MB per file · Maximum 10 files total
                 </div>
 
                 <div class="selected-files"></div>
@@ -394,13 +364,10 @@ function createQuestion(
             </div>
 
         `;
-
     }
 
 
-    /*
-        FALLBACK
-    */
+    /* FALLBACK */
 
     else {
 
@@ -416,7 +383,6 @@ function createQuestion(
             ></textarea>
 
         `;
-
     }
 
 
@@ -473,19 +439,15 @@ function createQuestion(
         );
 
     }
-
 }
 
 
-/*
-    FILE VALIDATION
-*/
+/* FILE VALIDATION */
 
 function validateFiles(input) {
 
     const files =
         Array.from(input.files);
-
 
     const maxSize =
         5 * 1024 * 1024;
@@ -515,23 +477,22 @@ function validateFiles(input) {
 
             return false;
         }
-
     }
 
 
     clearError();
 
 
-    const selectedFiles =
+    const container =
         input.parentElement
             ?.querySelector(
                 ".selected-files"
             );
 
 
-    if (selectedFiles) {
+    if (container) {
 
-        selectedFiles.innerHTML =
+        container.innerHTML =
             files
                 .map(
                     file => `
@@ -542,18 +503,14 @@ function validateFiles(input) {
                     `
                 )
                 .join("");
-
     }
 
 
     return true;
-
 }
 
 
-/*
-    SUBMIT
-*/
+/* FORM SUBMISSION */
 
 applicationForm.addEventListener(
     "submit",
@@ -595,16 +552,10 @@ applicationForm.addEventListener(
         }
 
 
-        /*
-            ANSWERS
-        */
-
         const answers = {};
 
 
-        /*
-            TEXT
-        */
+        /* TEXT ANSWERS */
 
         document
             .querySelectorAll(
@@ -620,9 +571,7 @@ applicationForm.addEventListener(
             });
 
 
-        /*
-            MULTIPLE CHOICE
-        */
+        /* MULTIPLE CHOICE */
 
         document
             .querySelectorAll(
@@ -648,20 +597,15 @@ applicationForm.addEventListener(
             });
 
 
-        /*
-            CHECK REQUIRED QUESTIONS
-        */
+        /* REQUIRED QUESTIONS */
 
-        const questionBlocks =
+        const blocks =
             document.querySelectorAll(
                 ".question"
             );
 
 
-        for (
-            const block
-            of questionBlocks
-        ) {
+        for (const block of blocks) {
 
             const number =
                 block.dataset.question;
@@ -677,45 +621,33 @@ applicationForm.addEventListener(
                 !data ||
                 data.required === false
             ) {
-
                 continue;
             }
 
 
-            /*
-                TEXT
-            */
+            if (data.type === "text") {
 
-            if (
-                data.type === "text"
-            ) {
-
-                const input =
+                const textarea =
                     block.querySelector(
                         "textarea"
                     );
 
 
                 if (
-                    !input ||
-                    !input.value.trim()
+                    !textarea ||
+                    !textarea.value.trim()
                 ) {
 
                     showError(
                         "Please answer every required question."
                     );
 
-                    input?.focus();
+                    textarea?.focus();
 
                     return;
                 }
-
             }
 
-
-            /*
-                MULTIPLE
-            */
 
             else if (
                 data.type === "multiple"
@@ -735,13 +667,8 @@ applicationForm.addEventListener(
 
                     return;
                 }
-
             }
 
-
-            /*
-                FILE
-            */
 
             else if (
                 data.type === "file"
@@ -764,15 +691,11 @@ applicationForm.addEventListener(
 
                     return;
                 }
-
             }
-
         }
 
 
-        /*
-            FILE LIMIT
-        */
+        /* TOTAL FILE COUNT */
 
         const fileInputs =
             document.querySelectorAll(
@@ -783,10 +706,7 @@ applicationForm.addEventListener(
         let totalFiles = 0;
 
 
-        for (
-            const input
-            of fileInputs
-        ) {
+        for (const input of fileInputs) {
 
             totalFiles +=
                 input.files.length;
@@ -804,9 +724,7 @@ applicationForm.addEventListener(
         }
 
 
-        /*
-            FORM DATA
-        */
+        /* BUILD REQUEST */
 
         const formData =
             new FormData();
@@ -838,38 +756,27 @@ applicationForm.addEventListener(
         );
 
 
-        /*
-            FILES
-        */
+        /* FILES */
 
-        for (
-            const input
-            of fileInputs
-        ) {
+        for (const input of fileInputs) {
 
-            const number =
+            const questionNumber =
                 input.dataset.question;
 
 
-            for (
-                const file
-                of input.files
-            ) {
+            for (const file of input.files) {
 
                 formData.append(
-                    `file_${number}`,
+                    `file_${questionNumber}`,
                     file,
                     file.name
                 );
 
             }
-
         }
 
 
-        /*
-            SUBMIT
-        */
+        /* SEND */
 
         submitButton.disabled =
             true;
@@ -904,25 +811,20 @@ applicationForm.addEventListener(
                     result.error ||
                     "Failed to submit application."
                 );
-
             }
 
 
-            document
-                .getElementById(
-                    "applicationID"
-                )
-                .textContent =
-                    result.applicationId ||
-                    "Unknown";
+            applicationID.textContent =
+                result.applicationId ||
+                "Unknown";
 
 
-            successArea.classList.remove(
+            applicationArea.classList.add(
                 "hidden"
             );
 
 
-            applicationArea.classList.add(
+            successArea.classList.remove(
                 "hidden"
             );
 
@@ -931,6 +833,7 @@ applicationForm.addEventListener(
                 behavior: "smooth",
                 block: "center"
             });
+
 
         }
         catch (error) {
@@ -955,29 +858,29 @@ applicationForm.addEventListener(
 );
 
 
-/*
-    HELPERS
-*/
+/* HELPERS */
 
 function formatSize(bytes) {
 
-    if (bytes < 1024 * 1024) {
+    if (
+        bytes <
+        1024 * 1024
+    ) {
 
         return (
             (bytes / 1024)
                 .toFixed(1) +
             " KB"
         );
-
     }
 
 
     return (
-        (bytes / (1024 * 1024))
+        (bytes /
+            (1024 * 1024))
             .toFixed(2) +
         " MB"
     );
-
 }
 
 
@@ -985,7 +888,6 @@ function showError(message) {
 
     errorMessage.textContent =
         message;
-
 }
 
 
@@ -993,7 +895,6 @@ function clearError() {
 
     errorMessage.textContent =
         "";
-
 }
 
 
@@ -1008,7 +909,6 @@ function escapeHTML(value) {
                 ">": "&gt;",
                 '"': "&quot;",
                 "'": "&#039;"
-            }[character])
+            })[character]
         );
-
 }
