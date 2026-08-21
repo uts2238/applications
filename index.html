@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
@@ -23,81 +22,98 @@
 
         <header>
 
-            <div class="badge">
+            <div class="top-badge">
                 APPLICATIONS
             </div>
 
-            <h1>
-                Applications
-            </h1>
+            <h1>Applications</h1>
 
             <p>
                 Choose an application below to get started.
             </p>
 
 
-<div class="applicant-info">
+            <!-- APPLICANT INFORMATION -->
 
-    <div class="info-field">
+            <div class="applicant-panel">
 
-        <label for="username">
-            Discord Username
-        </label>
+                <div class="applicant-header">
 
-        <input
-            id="username"
-            class="username"
-            type="text"
-            maxlength="100"
-            placeholder="your Discord username"
-            autocomplete="off"
-            spellcheck="false"
-        >
+                    <div>
+                        <span class="applicant-title">
+                            Applicant information
+                        </span>
 
-        <small>
-            Enter your Discord username.
-        </small>
+                        <span class="applicant-subtitle">
+                            Required before applying
+                        </span>
+                    </div>
 
-    </div>
+                    <span class="required-badge">
+                        REQUIRED
+                    </span>
+
+                </div>
 
 
-    <div class="info-field age-field">
+                <div class="applicant-fields">
 
-        <label for="age">
-            Age
-        </label>
+                    <div class="applicant-field">
 
-        <input
-            id="age"
-            class="age"
-            type="number"
-            min="1"
-            max="99"
-            placeholder="13"
-            autocomplete="off"
-            inputmode="numeric"
-        >
+                        <label for="username">
+                            Discord Username
+                        </label>
 
-        <small>
-            13+ required.
-        </small>
+                        <input
+                            id="username"
+                            type="text"
+                            maxlength="100"
+                            placeholder="your username"
+                            autocomplete="off"
+                            spellcheck="false"
+                        >
 
-    </div>
+                    </div>
 
-</div>
+
+                    <div class="applicant-field age-field">
+
+                        <label for="age">
+                            Age
+                        </label>
+
+                        <input
+                            id="age"
+                            type="number"
+                            min="1"
+                            max="99"
+                            placeholder="13"
+                            inputmode="numeric"
+                            autocomplete="off"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="applicant-note">
+                    Use your Discord username. You must be 13 or older to apply.
+                </div>
+
+            </div>
 
         </header>
 
 
-        <section
-            class="application-buttons"
-            aria-label="Applications"
-        >
+        <!-- APPLICATION TYPES -->
+
+        <section class="application-buttons">
 
             <button
                 class="application-card"
-                data-application="dev"
                 type="button"
+                data-application="dev"
             >
 
                 <span class="card-icon">
@@ -109,7 +125,7 @@
                 </span>
 
                 <span class="card-description">
-                    Apply to work on the game's code and systems.
+                    Apply to help develop and maintain the project.
                 </span>
 
             </button>
@@ -117,8 +133,8 @@
 
             <button
                 class="application-card"
-                data-application="mod"
                 type="button"
+                data-application="mod"
             >
 
                 <span class="card-icon">
@@ -130,7 +146,7 @@
                 </span>
 
                 <span class="card-description">
-                    Apply to help moderate the community.
+                    Help keep the community safe and enjoyable.
                 </span>
 
             </button>
@@ -138,12 +154,12 @@
 
             <button
                 class="application-card"
-                data-application="valueList"
                 type="button"
+                data-application="valueList"
             >
 
                 <span class="card-icon">
-                    VL
+                    VAL
                 </span>
 
                 <span class="card-title">
@@ -151,13 +167,15 @@
                 </span>
 
                 <span class="card-description">
-                    Apply to help manage and maintain item values.
+                    Help maintain accurate item values and trades.
                 </span>
 
             </button>
 
         </section>
 
+
+        <!-- APPLICATION -->
 
         <section
             id="applicationArea"
@@ -168,16 +186,12 @@
 
                 <div
                     id="applicationBadge"
-                    class="badge"
+                    class="application-badge"
                 ></div>
 
-                <h2
-                    id="applicationTitle"
-                ></h2>
+                <h2 id="applicationTitle"></h2>
 
-                <p
-                    id="applicationCount"
-                ></p>
+                <p id="applicationCount"></p>
 
             </div>
 
@@ -186,30 +200,31 @@
 
                 <div id="questionsContainer"></div>
 
-
-                <div class="submit-area">
-
-                    <div
-                        id="errorMessage"
-                        class="error-message"
-                        role="alert"
-                        aria-live="polite"
-                    ></div>
-
-                    <button
-                        id="submitButton"
-                        class="submit-button"
-                        type="submit"
-                    >
-                        Submit Application
-                    </button>
-
-                </div>
-
             </form>
+
+
+            <div class="submit-area">
+
+                <div
+                    id="errorMessage"
+                    class="error-message"
+                    aria-live="polite"
+                ></div>
+
+                <button
+                    id="submitButton"
+                    class="submit-button"
+                    type="button"
+                >
+                    Submit Application
+                </button>
+
+            </div>
 
         </section>
 
+
+        <!-- SUCCESS -->
 
         <section
             id="successArea"
@@ -225,7 +240,7 @@
             </h2>
 
             <p>
-                Your application has been sent.
+                Your application has been sent successfully.
             </p>
 
             <p>
@@ -242,4 +257,5 @@
     <script src="app.js"></script>
 
 </body>
+
 </html>
