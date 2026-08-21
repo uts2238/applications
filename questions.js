@@ -909,18 +909,22 @@ window.APPLICATIONS = {
                 example: "Example: I consistently create content and have an active audience."
             },
 
-        ["20"]: {
-            type: "file",
-            required: false,
-            question: "Upload examples of your content.",
-            example: "Screenshots, videos or other examples of your work are optional.",
-            accept: [
-                "image/*",
-                "video/*",
-                ".mp4",
-                ".mov",
-                ".webm"
-            ]
+            ["20"]: {
+                type: "file",
+                required: false,
+                question: "Upload examples of your content.",
+                example: "Optional screenshots, videos or other examples of your work.",
+                accept: [
+                    "image/*",
+                    "video/*",
+                    ".mp4",
+                    ".mov",
+                    ".webm"
+                ]
+            }
+
         }
+
     }
+
 };
