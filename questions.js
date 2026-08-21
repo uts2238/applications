@@ -1,5 +1,159 @@
 window.APPLICATIONS = {
 
+    partner: {
+
+        title: "Partner Application",
+        badge: "CC",
+
+        questions: {
+
+            1: {
+                type: "text",
+                required: true,
+                question: "What is your Discord server called?",
+                example: "Example: My Community"
+            },
+
+            2: {
+                type: "text",
+                required: true,
+                question: "What is the invite link to your server?",
+                example: "Example: discord.gg/example"
+            },
+
+            3: {
+                type: "text",
+                required: true,
+                question: "What is your server about?",
+                example: "Tell us what your community is focused on."
+            },
+
+            4: {
+                type: "multiple",
+                required: true,
+                question: "How many members does your server have?",
+                choices: [
+                    "Under 100",
+                    "100-500",
+                    "500-1,000",
+                    "1,000+"
+                ]
+            },
+
+            5: {
+                type: "text",
+                required: true,
+                question: "Why do you want to partner with us?"
+            },
+
+            6: {
+                type: "text",
+                required: true,
+                question: "What can you offer our community?"
+            },
+
+            7: {
+                type: "text",
+                required: true,
+                question: "What can we offer your community?"
+            },
+
+            8: {
+                type: "text",
+                required: true,
+                question: "How active is your server?"
+            },
+
+            9: {
+                type: "multiple",
+                required: true,
+                question: "Does your server have active moderation?",
+                choices: [
+                    "Yes",
+                    "No"
+                ]
+            },
+
+            10: {
+                type: "text",
+                required: true,
+                question: "Who owns the server?"
+            },
+
+            11: {
+                type: "text",
+                required: true,
+                question: "How long has the server existed?"
+            },
+
+            12: {
+                type: "text",
+                required: true,
+                question: "What makes your server different?"
+            },
+
+            13: {
+                type: "multiple",
+                required: true,
+                question: "Does your server contain NSFW content?",
+                choices: [
+                    "No",
+                    "Yes"
+                ]
+            },
+
+            14: {
+                type: "text",
+                required: true,
+                question: "How did you find our community?"
+            },
+
+            15: {
+                type: "text",
+                required: true,
+                question: "Have you partnered with other servers before?"
+            },
+
+            16: {
+                type: "text",
+                required: true,
+                question: "What would you expect from this partnership?"
+            },
+
+            17: {
+                type: "text",
+                required: true,
+                question: "How would you advertise the partnership?"
+            },
+
+            18: {
+                type: "text",
+                required: true,
+                question: "Is there anything else we should know?"
+            },
+
+            19: {
+                type: "file",
+                required: false,
+                question: "Upload any screenshots or other relevant information.",
+                accept: [
+                    "image/*",
+                    ".png",
+                    ".jpg",
+                    ".jpeg"
+                ]
+            },
+
+            20: {
+                type: "text",
+                required: true,
+                question: "Do you agree to follow our partnership requirements?"
+            }
+
+        }
+    },
+
+
     dev: {
 
         title: "Developer Application",
@@ -7,202 +161,147 @@ window.APPLICATIONS = {
 
         questions: {
 
-            ["1"]: {
+            1: {
                 type: "text",
                 required: true,
-
-                question:
-                    "A player touches a part and you want it to deal 25 damage. How would you do that in Luau?",
-
-                example:
-                    "Example: Explain what event you'd use and where the code should run."
+                question: "What kind of things do you enjoy building?",
+                example: "Tell us about the type of systems, games or projects you like making."
             },
 
-            ["2"]: {
+            2: {
                 type: "multiple",
                 required: true,
-
-                question:
-                    "How would you rate your Luau skills?",
-
+                question: "How experienced are you with Luau?",
                 choices: [
                     "Beginner",
-                    "Decent",
-                    "Good",
-                    "Very good",
-                    "Really good"
+                    "Intermediate",
+                    "Experienced",
+                    "Professional"
                 ]
             },
 
-            ["3"]: {
+            3: {
                 type: "text",
                 required: true,
-
-                question:
-                    "What have you made in Roblox before?",
-
-                example:
-                    "Games, systems, scripts, UI, tools, plugins, anything like that."
+                question: "How long have you been using Luau?"
             },
 
-            ["4"]: {
+            4: {
+                type: "text",
+                required: true,
+                question: "What have you built before?"
+            },
+
+            5: {
+                type: "text",
+                required: true,
+                question: "What is your strongest area of development?"
+            },
+
+            6: {
+                type: "text",
+                required: true,
+                question: "What is something difficult you have programmed?"
+            },
+
+            7: {
+                type: "text",
+                required: true,
+                question: "How do you usually debug something that is not working?"
+            },
+
+            8: {
+                type: "multiple",
+                required: true,
+                question: "How comfortable are you working with other developers?",
+                choices: [
+                    "Not very comfortable",
+                    "Somewhat comfortable",
+                    "Very comfortable",
+                    "Extremely comfortable"
+                ]
+            },
+
+            9: {
+                type: "text",
+                required: true,
+                question: "How would you handle a disagreement with another developer?"
+            },
+
+            10: {
+                type: "text",
+                required: true,
+                question: "What do you think makes code maintainable?"
+            },
+
+            11: {
+                type: "text",
+                required: true,
+                question: "Have you worked with Roblox RemoteEvents and RemoteFunctions?"
+            },
+
+            12: {
+                type: "text",
+                required: true,
+                question: "Have you worked with DataStores or profile systems?"
+            },
+
+            13: {
+                type: "text",
+                required: true,
+                question: "How would you prevent a simple client-side exploit?"
+            },
+
+            14: {
+                type: "text",
+                required: true,
+                question: "How active can you be?"
+            },
+
+            15: {
+                type: "text",
+                required: true,
+                question: "What would you do if you introduced a bug into a live game?"
+            },
+
+            16: {
+                type: "text",
+                required: true,
+                question: "Why do you want to join the development team?"
+            },
+
+            17: {
+                type: "text",
+                required: true,
+                question: "What would you like to work on?"
+            },
+
+            18: {
+                type: "text",
+                required: true,
+                question: "Do you have experience using Git or other version control?"
+            },
+
+            19: {
                 type: "file",
                 required: false,
-
-                question:
-                    "Got anything you've made? Send it here.",
-
-                example:
-                    "Screenshots, videos, place files, scripts, projects, etc.",
-
+                question: "Upload examples of your work.",
                 accept: [
                     "image/*",
                     "video/*",
                     ".zip",
                     ".rar",
-                    ".txt",
-                    ".lua",
-                    ".luau"
+                    ".txt"
                 ]
             },
 
-            ["5"]: {
+            20: {
                 type: "text",
                 required: true,
-
-                question:
-                    "How long have you been scripting in Roblox?"
-            },
-
-            ["6"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What's the difference between a LocalScript and a normal server Script?"
-            },
-
-            ["7"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What are RemoteEvents used for?"
-            },
-
-            ["8"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "A script suddenly stops working and gives an error. What do you normally do first?"
-            },
-
-            ["9"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What's the difference between :WaitForChild() and just looking for an object directly?"
-            },
-
-            ["10"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "If you had to save a player's coins and inventory, how would you approach it?"
-            },
-
-            ["11"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What would you do if your code worked perfectly in Studio but broke when multiple players joined?"
-            },
-
-            ["12"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "How would you stop an exploiter from giving themselves a unit or currency?"
-            },
-
-            ["13"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Have you used ModuleScripts before? If yes, what did you use them for?"
-            },
-
-            ["14"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What's the biggest or most complicated system you've made?"
-            },
-
-            ["15"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "You open someone else's huge script and it's messy as hell. How would you go about changing it without breaking everything?"
-            },
-
-            ["16"]: {
-                type: "multiple",
-                required: true,
-
-                question:
-                    "How much time can you usually spend working on the game?",
-
-                choices: [
-                    "Less than 1 hour a day",
-                    "1-3 hours a day",
-                    "3-6 hours a day",
-                    "6+ hours a day"
-                ]
-            },
-
-            ["17"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "If you don't know how to make something, what do you do?"
-            },
-
-            ["18"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Someone asks you to make a system but their explanation is confusing. What would you do?"
-            },
-
-            ["19"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Why do you want to work on this game?"
-            },
-
-            ["20"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Anything else you want us to know about you or your development experience?"
+                question: "Why should we choose you?"
             }
 
         }
-
     },
 
 
@@ -213,21 +312,16 @@ window.APPLICATIONS = {
 
         questions: {
 
-            ["1"]: {
+            1: {
                 type: "text",
                 required: true,
-
-                question:
-                    "What would you do if someone started spamming slurs in chat?"
+                question: "What would you do if a member breaks a rule?"
             },
 
-            ["2"]: {
+            2: {
                 type: "multiple",
                 required: true,
-
-                question:
-                    "How active are you usually?",
-
+                question: "How active are you?",
                 choices: [
                     "Less than 1 hour a day",
                     "1-3 hours a day",
@@ -236,24 +330,112 @@ window.APPLICATIONS = {
                 ]
             },
 
-            ["3"]: {
+            3: {
                 type: "text",
                 required: true,
-
-                question:
-                    "Why do you want to become a moderator?"
+                question: "Why do you want to become a moderator?"
             },
 
-            ["4"]: {
+            4: {
+                type: "text",
+                required: true,
+                question: "What would you do if someone repeatedly broke the rules?"
+            },
+
+            5: {
+                type: "text",
+                required: true,
+                question: "How would you handle an argument between two members?"
+            },
+
+            6: {
+                type: "text",
+                required: true,
+                question: "What would you do if a friend broke a rule?"
+            },
+
+            7: {
+                type: "text",
+                required: true,
+                question: "What does being a good moderator mean to you?"
+            },
+
+            8: {
+                type: "multiple",
+                required: true,
+                question: "How comfortable are you enforcing rules?",
+                choices: [
+                    "Not comfortable",
+                    "Somewhat comfortable",
+                    "Comfortable",
+                    "Very comfortable"
+                ]
+            },
+
+            9: {
+                type: "text",
+                required: true,
+                question: "What would you do if someone used a slur?"
+            },
+
+            10: {
+                type: "text",
+                required: true,
+                question: "What would you do if someone was advertising another server?"
+            },
+
+            11: {
+                type: "text",
+                required: true,
+                question: "How would you respond to someone insulting you?"
+            },
+
+            12: {
+                type: "text",
+                required: true,
+                question: "What would you do if another moderator abused their permissions?"
+            },
+
+            13: {
+                type: "text",
+                required: true,
+                question: "How would you deal with false reports?"
+            },
+
+            14: {
+                type: "text",
+                required: true,
+                question: "How familiar are you with Discord moderation?"
+            },
+
+            15: {
+                type: "text",
+                required: true,
+                question: "What moderation tools have you used?"
+            },
+
+            16: {
+                type: "text",
+                required: true,
+                question: "How would you handle a situation you were unsure about?"
+            },
+
+            17: {
+                type: "text",
+                required: true,
+                question: "How active are you on Discord?"
+            },
+
+            18: {
+                type: "text",
+                required: true,
+                question: "What are some qualities a moderator should have?"
+            },
+
+            19: {
                 type: "file",
                 required: false,
-
-                question:
-                    "Have you moderated anywhere before? Send proof if you have any.",
-
-                example:
-                    "Screenshots, previous staff roles, moderation logs, etc.",
-
+                question: "Upload any relevant moderation examples.",
                 accept: [
                     "image/*",
                     ".png",
@@ -262,338 +444,117 @@ window.APPLICATIONS = {
                 ]
             },
 
-            ["5"]: {
+            20: {
                 type: "text",
                 required: true,
-
-                question:
-                    "Have you been a moderator or staff member anywhere before? If so, where?"
-            },
-
-            ["6"]: {
-                type: "multiple",
-                required: true,
-
-                question:
-                    "How would you describe yourself as a moderator?",
-
-                choices: [
-                    "Very strict",
-                    "Usually strict",
-                    "Fair",
-                    "Pretty relaxed",
-                    "Very relaxed"
-                ]
-            },
-
-            ["7"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Two people start arguing and both are insulting each other. What do you do?"
-            },
-
-            ["8"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Your friend breaks a rule. What do you do?"
-            },
-
-            ["9"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Another moderator gives someone a punishment you think is unfair. What do you do?"
-            },
-
-            ["10"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Someone keeps breaking the same rule after being warned multiple times. What would you do?"
-            },
-
-            ["11"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Someone is clearly trying to annoy you so you'll punish them. How do you handle it?"
-            },
-
-            ["12"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Someone reports another player but doesn't provide any proof. What do you do?"
-            },
-
-            ["13"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What would you do if you weren't sure whether something actually broke a rule?"
-            },
-
-            ["14"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Someone gets punished and starts complaining about it in chat. How would you handle them?"
-            },
-
-            ["15"]: {
-                type: "multiple",
-                required: true,
-
-                question:
-                    "How comfortable are you with making punishments on your own?",
-
-                choices: [
-                    "Not comfortable",
-                    "A little comfortable",
-                    "Comfortable",
-                    "Very comfortable"
-                ]
-            },
-
-            ["16"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What do you think makes someone a good moderator?"
-            },
-
-            ["17"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What's something a moderator should never do?"
-            },
-
-            ["18"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What would you do if a member was being annoying but technically hadn't broken any rules?"
-            },
-
-            ["19"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Why should we pick you instead of someone else?"
-            },
-
-            ["20"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Is there anything else you want us to know?"
+                question: "Why should we choose you?"
             }
 
         }
-
     },
 
 
     valueList: {
 
         title: "Value List Application",
-        badge: "VALUE LIST",
+        badge: "VAL",
 
         questions: {
 
-            ["1"]: {
+            1: {
                 type: "multiple",
                 required: true,
-
-                question:
-                    "How familiar are you with trading?",
-
+                question: "How familiar are you with trading?",
                 choices: [
                     "Not very familiar",
                     "Somewhat familiar",
                     "Very familiar",
-                    "I trade a lot"
+                    "Expert"
                 ]
             },
 
-            ["2"]: {
+            2: {
                 type: "text",
                 required: true,
-
-                question:
-                    "How would you decide what an item is worth?"
+                question: "How would you determine the value of an item?"
             },
 
-            ["3"]: {
+            3: {
                 type: "text",
                 required: true,
-
-                question:
-                    "What would you do if you disagreed with another valuer?"
+                question: "What factors affect an item's value?"
             },
 
-            ["4"]: {
-                type: "file",
-                required: false,
-
-                question:
-                    "Have you made a value list before? Send it here if you have one.",
-
-                example:
-                    "Screenshots, files, spreadsheets, etc.",
-
-                accept: [
-                    "image/*",
-                    ".png",
-                    ".jpg",
-                    ".jpeg",
-                    ".pdf",
-                    ".xlsx",
-                    ".csv"
-                ]
-            },
-
-            ["5"]: {
+            4: {
                 type: "text",
                 required: true,
-
-                question:
-                    "How long have you been trading?"
+                question: "How important is demand when determining value?"
             },
 
-            ["6"]: {
+            5: {
+                type: "text",
+                required: true,
+                question: "How would you handle an item with very few trades?"
+            },
+
+            6: {
+                type: "text",
+                required: true,
+                question: "How would you determine whether a trade is fair?"
+            },
+
+            7: {
+                type: "text",
+                required: true,
+                question: "What sources would you use when researching values?"
+            },
+
+            8: {
+                type: "text",
+                required: true,
+                question: "What would you do if two sources had different values?"
+            },
+
+            9: {
+                type: "text",
+                required: true,
+                question: "How would you react to a sudden change in demand?"
+            },
+
+            10: {
+                type: "text",
+                required: true,
+                question: "How often should values be reviewed?"
+            },
+
+            11: {
+                type: "text",
+                required: true,
+                question: "What makes a value list reliable?"
+            },
+
+            12: {
+                type: "text",
+                required: true,
+                question: "How would you identify manipulated trades?"
+            },
+
+            13: {
+                type: "text",
+                required: true,
+                question: "What would you do if you made an incorrect value?"
+            },
+
+            14: {
+                type: "text",
+                required: true,
+                question: "What would you do if another valuer disagreed with you?"
+            },
+
+            15: {
                 type: "multiple",
                 required: true,
-
-                question:
-                    "How often do you trade?",
-
-                choices: [
-                    "Rarely",
-                    "Sometimes",
-                    "Often",
-                    "Every day"
-                ]
-            },
-
-            ["7"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What can make an item's value go up?"
-            },
-
-            ["8"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What can make an item's value go down?"
-            },
-
-            ["9"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "How important is demand when valuing something?"
-            },
-
-            ["10"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "How would you decide if a trade is a W, F, or L?"
-            },
-
-            ["11"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "An item suddenly becomes extremely popular. What happens to its value?"
-            },
-
-            ["12"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "You find two completely different values for the same item. How would you figure out which one is closer to the real value?"
-            },
-
-            ["13"]: {
-                type: "multiple",
-                required: true,
-
-                question:
-                    "Which of these matters the most when valuing an item?",
-
-                choices: [
-                    "Rarity",
-                    "Demand",
-                    "Trade history",
-                    "All of them"
-                ]
-            },
-
-            ["14"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What would you do if you personally owned an item that you were responsible for valuing?"
-            },
-
-            ["15"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "Someone claims an item is worth 10x more than your value. How would you check whether they're right?"
-            },
-
-            ["16"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "What would you do if the community strongly disagreed with a value you set?"
-            },
-
-            ["17"]: {
-                type: "text",
-                required: true,
-
-                question:
-                    "How would you keep your values from being affected by your own trades?"
-            },
-
-            ["18"]: {
-                type: "multiple",
-                required: true,
-
-                question:
-                    "How confident are you when judging trades?",
-
+                question: "How confident are you when evaluating trades?",
                 choices: [
                     "Not confident",
                     "Somewhat confident",
@@ -602,24 +563,193 @@ window.APPLICATIONS = {
                 ]
             },
 
-            ["19"]: {
+            16: {
                 type: "text",
                 required: true,
-
-                question:
-                    "Why do you want to work on the value list?"
+                question: "Have you created value lists before?"
             },
 
-            ["20"]: {
+            17: {
                 type: "text",
                 required: true,
+                question: "What trading communities have you been part of?"
+            },
 
-                question:
-                    "Why should we trust you to help decide item values?"
+            18: {
+                type: "text",
+                required: true,
+                question: "How active can you be?"
+            },
+
+            19: {
+                type: "file",
+                required: false,
+                question: "Upload previous value lists or examples of your work.",
+                accept: [
+                    "image/*",
+                    ".png",
+                    ".jpg",
+                    ".jpeg",
+                    ".pdf"
+                ]
+            },
+
+            20: {
+                type: "text",
+                required: true,
+                question: "Why should we choose you as a valuer?"
             }
 
         }
+    },
 
+
+    tester: {
+
+        title: "Tester Application",
+        badge: "TEST",
+
+        questions: {
+
+            1: {
+                type: "text",
+                required: true,
+                question: "What makes you interested in testing?"
+            },
+
+            2: {
+                type: "multiple",
+                required: true,
+                question: "How experienced are you with testing games?",
+                choices: [
+                    "Beginner",
+                    "Some experience",
+                    "Experienced",
+                    "Very experienced"
+                ]
+            },
+
+            3: {
+                type: "text",
+                required: true,
+                question: "What would you look for when testing a new feature?"
+            },
+
+            4: {
+                type: "text",
+                required: true,
+                question: "How would you report a bug?"
+            },
+
+            5: {
+                type: "text",
+                required: true,
+                question: "What information should a useful bug report contain?"
+            },
+
+            6: {
+                type: "text",
+                required: true,
+                question: "How would you reproduce a bug?"
+            },
+
+            7: {
+                type: "text",
+                required: true,
+                question: "What would you do if you found a game-breaking bug?"
+            },
+
+            8: {
+                type: "text",
+                required: true,
+                question: "How would you test a feature you know very little about?"
+            },
+
+            9: {
+                type: "multiple",
+                required: true,
+                question: "How often could you test?",
+                choices: [
+                    "Occasionally",
+                    "A few times a week",
+                    "Daily",
+                    "Multiple times a day"
+                ]
+            },
+
+            10: {
+                type: "text",
+                required: true,
+                question: "What is the difference between a bug and a feature request?"
+            },
+
+            11: {
+                type: "text",
+                required: true,
+                question: "How would you test an update before release?"
+            },
+
+            12: {
+                type: "text",
+                required: true,
+                question: "What would you do if a developer disagreed with your bug report?"
+            },
+
+            13: {
+                type: "text",
+                required: true,
+                question: "How good are you at noticing small details?"
+            },
+
+            14: {
+                type: "text",
+                required: true,
+                question: "Have you tested Roblox games before?"
+            },
+
+            15: {
+                type: "text",
+                required: true,
+                question: "What platforms can you test on?"
+            },
+
+            16: {
+                type: "text",
+                required: true,
+                question: "How would you test something that works differently for different players?"
+            },
+
+            17: {
+                type: "text",
+                required: true,
+                question: "What would make you report a bug as high priority?"
+            },
+
+            18: {
+                type: "text",
+                required: true,
+                question: "How active can you be?"
+            },
+
+            19: {
+                type: "file",
+                required: false,
+                question: "Upload examples of previous bug reports or testing work.",
+                accept: [
+                    "image/*",
+                    "video/*",
+                    ".txt",
+                    ".pdf"
+                ]
+            },
+
+            20: {
+                type: "text",
+                required: true,
+                question: "Why should we choose you as a tester?"
+            }
+
+        }
     }
 
 };
