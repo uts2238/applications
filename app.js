@@ -5,10 +5,6 @@ const WORKER_URL =
 let selectedApplication = null;
 
 
-/* =================================
-   ELEMENTS
-================================= */
-
 const usernameInput =
     document.getElementById("username");
 
@@ -46,9 +42,9 @@ const applicationID =
     document.getElementById("applicationID");
 
 
-/* =================================
+/* ================================
    APPLICATION BUTTONS
-================================= */
+================================ */
 
 document
     .querySelectorAll(".application-card")
@@ -68,16 +64,16 @@ document
     });
 
 
-/* =================================
+/* ================================
    APPLICANT VALIDATION
-================================= */
+================================ */
 
 function validateApplicant() {
 
     const username =
         usernameInput.value.trim();
 
-    const ageText =
+    const ageValue =
         ageInput.value.trim();
 
 
@@ -93,7 +89,7 @@ function validateApplicant() {
     }
 
 
-    if (!ageText) {
+    if (!ageValue) {
 
         showError(
             "Enter your age first."
@@ -106,7 +102,7 @@ function validateApplicant() {
 
 
     const age =
-        Number(ageText);
+        Number(ageValue);
 
 
     if (
@@ -139,9 +135,9 @@ function validateApplicant() {
 }
 
 
-/* =================================
+/* ================================
    OPEN APPLICATION
-================================= */
+================================ */
 
 function openApplication(type) {
 
@@ -177,16 +173,6 @@ function openApplication(type) {
 
         showError(
             "This application has no questions."
-        );
-
-        return;
-    }
-
-
-    if (questions.length > 150) {
-
-        showError(
-            "This application has too many questions."
         );
 
         return;
@@ -251,9 +237,9 @@ function openApplication(type) {
 }
 
 
-/* =================================
+/* ================================
    CREATE QUESTION
-================================= */
+================================ */
 
 function createQuestion(
     number,
@@ -283,8 +269,6 @@ function createQuestion(
     let content = "";
 
 
-    /* TEXT */
-
     if (type === "text") {
 
         content = `
@@ -301,8 +285,6 @@ function createQuestion(
         `;
     }
 
-
-    /* MULTIPLE CHOICE */
 
     else if (type === "multiple") {
 
@@ -348,8 +330,6 @@ function createQuestion(
     }
 
 
-    /* FILE */
-
     else if (type === "file") {
 
         const accept =
@@ -384,8 +364,6 @@ function createQuestion(
         `;
     }
 
-
-    /* FALLBACK */
 
     else {
 
@@ -460,9 +438,9 @@ function createQuestion(
 }
 
 
-/* =================================
+/* ================================
    FILE VALIDATION
-================================= */
+================================ */
 
 function validateFiles(input) {
 
@@ -500,7 +478,6 @@ function validateFiles(input) {
 
             return false;
         }
-
     }
 
 
@@ -533,9 +510,9 @@ function validateFiles(input) {
 }
 
 
-/* =================================
+/* ================================
    SUBMIT
-================================= */
+================================ */
 
 submitButton.addEventListener(
     "click",
@@ -598,7 +575,7 @@ async function submitApplication() {
         });
 
 
-    /* MULTIPLE CHOICE */
+    /* MULTIPLE */
 
     document
         .querySelectorAll(
@@ -626,16 +603,13 @@ async function submitApplication() {
 
     /* REQUIRED QUESTIONS */
 
-    const questionBlocks =
+    const blocks =
         document.querySelectorAll(
             ".question"
         );
 
 
-    for (
-        const block
-        of questionBlocks
-    ) {
+    for (const block of blocks) {
 
         const number =
             block.dataset.question;
@@ -655,10 +629,7 @@ async function submitApplication() {
         }
 
 
-        if (
-            data.type ===
-            "text"
-        ) {
+        if (data.type === "text") {
 
             const textarea =
                 block.querySelector(
@@ -682,10 +653,7 @@ async function submitApplication() {
         }
 
 
-        else if (
-            data.type ===
-            "multiple"
-        ) {
+        else if (data.type === "multiple") {
 
             const selected =
                 block.querySelector(
@@ -704,10 +672,7 @@ async function submitApplication() {
         }
 
 
-        else if (
-            data.type ===
-            "file"
-        ) {
+        else if (data.type === "file") {
 
             const input =
                 block.querySelector(
@@ -730,7 +695,7 @@ async function submitApplication() {
     }
 
 
-    /* FILE COUNT */
+    /* FILES */
 
     const fileInputs =
         document.querySelectorAll(
@@ -741,10 +706,7 @@ async function submitApplication() {
     let totalFiles = 0;
 
 
-    for (
-        const input
-        of fileInputs
-    ) {
+    for (const input of fileInputs) {
 
         const files =
             Array.from(
@@ -756,10 +718,7 @@ async function submitApplication() {
             files.length;
 
 
-        for (
-            const file
-            of files
-        ) {
+        for (const file of files) {
 
             if (
                 file.size >
@@ -776,10 +735,7 @@ async function submitApplication() {
     }
 
 
-    if (
-        totalFiles >
-        10
-    ) {
+    if (totalFiles > 10) {
 
         showError(
             "You can upload a maximum of 10 files per application."
@@ -825,33 +781,22 @@ async function submitApplication() {
     );
 
 
-    /* FILES */
-
-    for (
-        const input
-        of fileInputs
-    ) {
+    for (const input of fileInputs) {
 
         const questionNumber =
             input.dataset.question;
 
 
-        for (
-            const file
-            of input.files
-        ) {
+        for (const file of input.files) {
 
             formData.append(
                 `file_${questionNumber}`,
                 file,
                 file.name
             );
-
         }
     }
 
-
-    /* BUTTON */
 
     submitButton.disabled =
         true;
@@ -883,9 +828,7 @@ async function submitApplication() {
                 );
 
 
-        if (
-            !response.ok
-        ) {
+        if (!response.ok) {
 
             throw new Error(
                 result.error ||
@@ -916,7 +859,6 @@ async function submitApplication() {
 
     }
 
-
     catch (error) {
 
         showError(
@@ -925,7 +867,6 @@ async function submitApplication() {
         );
 
     }
-
 
     finally {
 
@@ -939,9 +880,9 @@ async function submitApplication() {
 }
 
 
-/* =================================
+/* ================================
    HELPERS
-================================= */
+================================ */
 
 function formatSize(bytes) {
 
