@@ -1,179 +1,253 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
     <title>Applications</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 </head>
 
 <body>
 
-<div class="background-glow glow-one"></div>
-<div class="background-glow glow-two"></div>
+    <main>
 
-<main>
+        <header>
 
-    <header>
+            <div class="badge">
+                APPLICATIONS
+            </div>
 
-        <div class="badge">
-            APPLICATIONS
-        </div>
+            <h1>
+                Applications
+            </h1>
 
-        <h1>Applications</h1>
-
-        <p>
-            Choose an application below to get started.
-        </p>
-
-        <div class="username-box">
-
-            <label for="username">
-                Discord Username
-            </label>
-
-            <input
-                id="username"
-                type="text"
-                maxlength="100"
-                placeholder="@username"
-                autocomplete="off"
-            >
-
-        </div>
-
-    </header>
+            <p>
+                Choose an application below to get started.
+            </p>
 
 
-    <section class="application-buttons">
+            <div class="applicant-info">
 
-        <button
-            class="application-card"
-            data-application="dev"
-            type="button"
+                <div class="username-box">
+
+                    <label for="username">
+                        Discord Username
+                    </label>
+
+                    <div class="input-wrap">
+
+                        <span class="input-prefix">
+                            @
+                        </span>
+
+                        <input
+                            id="username"
+                            class="username"
+                            type="text"
+                            maxlength="100"
+                            placeholder="username"
+                            autocomplete="off"
+                            spellcheck="false"
+                        >
+
+                    </div>
+
+                    <small>
+                        Enter the Discord account you'll be using.
+                    </small>
+
+                </div>
+
+
+                <div class="age-box">
+
+                    <label for="age">
+                        Age
+                    </label>
+
+                    <input
+                        id="age"
+                        class="age"
+                        type="number"
+                        min="1"
+                        max="99"
+                        placeholder="13"
+                        autocomplete="off"
+                        inputmode="numeric"
+                    >
+
+                    <small>
+                        You must be 13+.
+                    </small>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section
+            class="application-buttons"
+            aria-label="Applications"
         >
-            <span class="card-icon">🛠️</span>
-
-            <span class="card-title">
-                Dev Apps
-            </span>
-
-            <span class="card-description">
-                Developer application
-            </span>
-        </button>
-
-
-        <button
-            class="application-card"
-            data-application="mod"
-            type="button"
-        >
-            <span class="card-icon">🛡️</span>
-
-            <span class="card-title">
-                Mod Apps
-            </span>
-
-            <span class="card-description">
-                Moderator application
-            </span>
-        </button>
-
-
-        <button
-            class="application-card"
-            data-application="valueList"
-            type="button"
-        >
-            <span class="card-icon">💎</span>
-
-            <span class="card-title">
-                Value List Apps
-            </span>
-
-            <span class="card-description">
-                Value list application
-            </span>
-        </button>
-
-    </section>
-
-
-    <section
-        id="applicationArea"
-        class="application-area hidden"
-    >
-
-        <div class="application-heading">
-
-            <div
-                id="applicationBadge"
-                class="badge"
-            ></div>
-
-            <h2 id="applicationTitle"></h2>
-
-            <p id="applicationCount"></p>
-
-        </div>
-
-
-        <form id="applicationForm"></form>
-
-
-        <div class="submit-area">
-
-            <div
-                id="errorMessage"
-                class="error-message"
-            ></div>
 
             <button
-                id="submitButton"
-                class="submit-button"
-                type="submit"
-                form="applicationForm"
+                class="application-card"
+                data-application="dev"
+                type="button"
             >
-                Submit Application
+
+                <span class="card-icon">
+                    DEV
+                </span>
+
+                <span class="card-title">
+                    Developer
+                </span>
+
+                <span class="card-description">
+                    Apply to work on the game's code and systems.
+                </span>
+
             </button>
 
-        </div>
 
-    </section>
+            <button
+                class="application-card"
+                data-application="mod"
+                type="button"
+            >
 
+                <span class="card-icon">
+                    MOD
+                </span>
 
-    <section
-        id="successArea"
-        class="success-area hidden"
-    >
+                <span class="card-title">
+                    Moderator
+                </span>
 
-        <div class="success-icon">
-            ✓
-        </div>
+                <span class="card-description">
+                    Apply to help moderate the community.
+                </span>
 
-        <h2>
-            Application submitted
-        </h2>
-
-        <p>
-            Your application has been sent.
-        </p>
-
-        <p>
-            Application ID:
-            <strong id="applicationID"></strong>
-        </p>
-
-    </section>
-
-</main>
+            </button>
 
 
-<script src="questions.js"></script>
-<script src="app.js"></script>
+            <button
+                class="application-card"
+                data-application="valueList"
+                type="button"
+            >
+
+                <span class="card-icon">
+                    VL
+                </span>
+
+                <span class="card-title">
+                    Value List
+                </span>
+
+                <span class="card-description">
+                    Apply to help manage and maintain item values.
+                </span>
+
+            </button>
+
+        </section>
+
+
+        <section
+            id="applicationArea"
+            class="application-area hidden"
+        >
+
+            <div class="application-heading">
+
+                <div
+                    id="applicationBadge"
+                    class="badge"
+                ></div>
+
+                <h2
+                    id="applicationTitle"
+                ></h2>
+
+                <p
+                    id="applicationCount"
+                ></p>
+
+            </div>
+
+
+            <form id="applicationForm">
+
+                <div id="questionsContainer"></div>
+
+
+                <div class="submit-area">
+
+                    <div
+                        id="errorMessage"
+                        class="error-message"
+                        role="alert"
+                        aria-live="polite"
+                    ></div>
+
+                    <button
+                        id="submitButton"
+                        class="submit-button"
+                        type="submit"
+                    >
+                        Submit Application
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <section
+            id="successArea"
+            class="success-area hidden"
+        >
+
+            <div class="success-icon">
+                ✓
+            </div>
+
+            <h2>
+                Application submitted
+            </h2>
+
+            <p>
+                Your application has been sent.
+            </p>
+
+            <p>
+                Application ID:
+                <strong id="applicationID"></strong>
+            </p>
+
+        </section>
+
+    </main>
+
+
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
 
 </body>
 </html>
