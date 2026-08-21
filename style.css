@@ -1,8 +1,5 @@
 :root {
-    font-family:
-        Arial,
-        Helvetica,
-        sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 
     --background: #090a0d;
     --panel: #101217;
@@ -10,14 +7,14 @@
     --panel-hover: #13161b;
 
     --border: #242830;
-    --border-light: #30353e;
+    --border-hover: #353a44;
 
     --text: #f1f2f4;
     --muted: #858b97;
     --muted-dark: #606671;
 
     --purple: #8b5cf6;
-    --purple-border: #664b9f;
+    --purple-dark: #6847a8;
 
     --green: #22c55e;
     --green-hover: #2bd469;
@@ -40,8 +37,8 @@ body {
 
     background:
         radial-gradient(
-            650px 300px at 50% -120px,
-            rgba(139, 92, 246, .075),
+            600px 300px at 50% -150px,
+            rgba(139, 92, 246, .07),
             transparent 70%
         ),
         var(--background);
@@ -67,41 +64,41 @@ main {
         );
 
     margin:
-        0 auto;
+        auto;
 
     padding:
         55px 0 90px;
 }
 
 
-/* =================================
-   HEADER
-================================= */
+/* HEADER */
 
 header {
-    width: 100%;
-    max-width: 760px;
+    max-width:
+        760px;
 
     margin:
         0 auto 32px;
 
-    text-align: center;
+    text-align:
+        center;
 }
 
 .top-badge {
-    display: inline-flex;
+    display:
+        inline-flex;
 
-    align-items: center;
-
-    min-height: 23px;
+    align-items:
+        center;
 
     padding:
-        0 9px;
+        5px 9px;
 
     border:
         1px solid #342e43;
 
-    border-radius: 5px;
+    border-radius:
+        5px;
 
     background:
         #14121a;
@@ -123,17 +120,11 @@ header h1 {
     margin:
         13px 0 7px;
 
-    color:
-        #f5f5f6;
-
     font-size:
         40px;
 
-    font-weight:
-        700;
-
     letter-spacing:
-        -1.6px;
+        -1.5px;
 }
 
 header > p {
@@ -145,20 +136,12 @@ header > p {
 
     font-size:
         13px;
-
-    line-height:
-        1.5;
 }
 
 
-/* =================================
-   APPLICANT PANEL
-================================= */
+/* APPLICANT */
 
 .applicant-panel {
-    width:
-        100%;
-
     margin-top:
         26px;
 
@@ -180,9 +163,6 @@ header > p {
 
     text-align:
         left;
-
-    box-shadow:
-        0 8px 30px rgba(0, 0, 0, .12);
 }
 
 .applicant-header {
@@ -194,9 +174,6 @@ header > p {
 
     justify-content:
         space-between;
-
-    gap:
-        15px;
 
     margin-bottom:
         13px;
@@ -243,9 +220,6 @@ header > p {
 }
 
 .required-badge {
-    flex-shrink:
-        0;
-
     padding:
         4px 7px;
 
@@ -266,9 +240,6 @@ header > p {
 
     font-weight:
         700;
-
-    letter-spacing:
-        .06em;
 }
 
 .applicant-fields {
@@ -276,8 +247,7 @@ header > p {
         grid;
 
     grid-template-columns:
-        minmax(0, 1fr)
-        180px;
+        1fr 180px;
 
     gap:
         10px;
@@ -303,26 +273,16 @@ header > p {
 
 .applicant-field:hover {
     border-color:
-        #363b45;
-
-    background:
-        #0e1014;
+        var(--border-hover);
 }
 
 .applicant-field:focus-within {
     border-color:
-        var(--purple-border);
-
-    background:
-        #0f1015;
+        var(--purple-dark);
 
     box-shadow:
-        0 0 0 3px rgba(
-            139,
-            92,
-            246,
-            .055
-        );
+        0 0 0 3px
+        rgba(139, 92, 246, .05);
 }
 
 .applicant-field label {
@@ -343,9 +303,6 @@ header > p {
 }
 
 .applicant-field input {
-    display:
-        block;
-
     width:
         100%;
 
@@ -372,20 +329,11 @@ header > p {
 
     font-size:
         12px;
-
-    transition:
-        border-color .15s ease,
-        background .15s ease;
 }
 
 .applicant-field input::placeholder {
     color:
         #555b65;
-}
-
-.applicant-field input:hover {
-    border-color:
-        #383d47;
 }
 
 .applicant-field input:focus {
@@ -405,9 +353,6 @@ header > p {
 .applicant-field input[type="number"]::-webkit-outer-spin-button {
     appearance:
         none;
-
-    margin:
-        0;
 }
 
 .applicant-note {
@@ -422,9 +367,7 @@ header > p {
 }
 
 
-/* =================================
-   APPLICATION CARDS
-================================= */
+/* APPLICATION CARDS */
 
 .application-buttons {
     display:
@@ -482,7 +425,7 @@ header > p {
         translateY(-2px);
 
     border-color:
-        var(--border-light);
+        var(--border-hover);
 
     background:
         var(--panel-hover);
@@ -501,6 +444,9 @@ header > p {
         center;
 
     width:
+        max-content;
+
+    min-width:
         38px;
 
     height:
@@ -508,6 +454,9 @@ header > p {
 
     margin-bottom:
         18px;
+
+    padding:
+        0 7px;
 
     border:
         1px solid #30343d;
@@ -543,9 +492,6 @@ header > p {
 }
 
 .card-description {
-    max-width:
-        230px;
-
     margin-top:
         5px;
 
@@ -560,9 +506,7 @@ header > p {
 }
 
 
-/* =================================
-   APPLICATION AREA
-================================= */
+/* APPLICATION */
 
 .application-area {
     margin-top:
@@ -578,14 +522,8 @@ header > p {
     display:
         inline-flex;
 
-    align-items:
-        center;
-
-    min-height:
-        23px;
-
     padding:
-        0 9px;
+        5px 9px;
 
     border:
         1px solid #342e43;
@@ -604,23 +542,14 @@ header > p {
 
     font-weight:
         700;
-
-    letter-spacing:
-        .07em;
 }
 
 .application-heading h2 {
     margin:
         10px 0 4px;
 
-    color:
-        #f1f1f3;
-
     font-size:
         25px;
-
-    font-weight:
-        700;
 
     letter-spacing:
         -.5px;
@@ -638,9 +567,7 @@ header > p {
 }
 
 
-/* =================================
-   QUESTIONS
-================================= */
+/* QUESTIONS */
 
 .question {
     margin-bottom:
@@ -659,16 +586,12 @@ header > p {
         var(--panel);
 
     transition:
-        border-color .15s ease,
-        background .15s ease;
+        border-color .15s ease;
 }
 
 .question:hover {
     border-color:
-        #2b3038;
-
-    background:
-        #11141a;
+        #2d323b;
 }
 
 .question-number {
@@ -718,9 +641,6 @@ header > p {
     border-left:
         2px solid #594582;
 
-    border-radius:
-        3px;
-
     background:
         #0c0e12;
 
@@ -735,14 +655,9 @@ header > p {
 }
 
 
-/* =================================
-   TEXT ANSWERS
-================================= */
+/* TEXT */
 
 textarea {
-    display:
-        block;
-
     width:
         100%;
 
@@ -775,11 +690,6 @@ textarea {
 
     line-height:
         1.55;
-
-    transition:
-        border-color .15s ease,
-        background .15s ease,
-        box-shadow .15s ease;
 }
 
 textarea::placeholder {
@@ -787,31 +697,17 @@ textarea::placeholder {
         #555b65;
 }
 
-textarea:hover {
-    border-color:
-        #363b45;
-}
-
 textarea:focus {
     border-color:
         #7650d4;
 
-    background:
-        #0e1014;
-
     box-shadow:
-        0 0 0 3px rgba(
-            139,
-            92,
-            246,
-            .055
-        );
+        0 0 0 3px
+        rgba(139, 92, 246, .05);
 }
 
 
-/* =================================
-   MULTIPLE CHOICE
-================================= */
+/* MULTIPLE */
 
 .choices {
     display:
@@ -857,10 +753,6 @@ textarea:focus {
 
     font-size:
         12px;
-
-    transition:
-        background .12s ease,
-        border-color .12s ease;
 }
 
 .choice:hover {
@@ -897,9 +789,7 @@ textarea:focus {
 }
 
 
-/* =================================
-   FILE UPLOAD
-================================= */
+/* FILES */
 
 .file-upload {
     padding:
@@ -952,11 +842,6 @@ textarea:focus {
         10px;
 }
 
-.file-input::file-selector-button:hover {
-    background:
-        #1c1f25;
-}
-
 .file-help {
     margin-top:
         8px;
@@ -983,9 +868,7 @@ textarea:focus {
 }
 
 
-/* =================================
-   SUBMIT
-================================= */
+/* SUBMIT */
 
 .submit-area {
     margin-top:
@@ -1033,20 +916,11 @@ textarea:focus {
 
     font-weight:
         700;
-
-    transition:
-        background .15s ease,
-        transform .1s ease;
 }
 
 .submit-button:hover {
     background:
         var(--green-hover);
-}
-
-.submit-button:active {
-    transform:
-        translateY(1px);
 }
 
 .submit-button:disabled {
@@ -1058,9 +932,7 @@ textarea:focus {
 }
 
 
-/* =================================
-   SUCCESS
-================================= */
+/* SUCCESS */
 
 .success-area {
     margin-top:
@@ -1096,7 +968,7 @@ textarea:focus {
         50px;
 
     margin:
-        0 auto;
+        auto;
 
     border:
         1px solid #2a613a;
@@ -1137,9 +1009,7 @@ textarea:focus {
 }
 
 
-/* =================================
-   HIDDEN
-================================= */
+/* HIDDEN */
 
 .hidden {
     display:
@@ -1147,9 +1017,7 @@ textarea:focus {
 }
 
 
-/* =================================
-   MOBILE
-================================= */
+/* MOBILE */
 
 @media (max-width: 700px) {
 
@@ -1170,9 +1038,7 @@ textarea:focus {
         grid-template-columns:
             1fr;
     }
-
 }
-
 
 @media (max-width: 520px) {
 
@@ -1185,20 +1051,4 @@ textarea:focus {
         align-items:
             flex-start;
     }
-
-}
-
-
-@media (max-width: 400px) {
-
-    .question {
-        padding:
-            15px;
-    }
-
-    .applicant-panel {
-        padding:
-            13px;
-    }
-
 }
