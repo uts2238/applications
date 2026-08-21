@@ -3,7 +3,12 @@ const WORKER_URL =
 
 
 let selectedApplication = null;
+let isSubmitting = false;
 
+
+/*
+    ELEMENTS
+*/
 
 const usernameInput =
     document.getElementById("username");
@@ -16,9 +21,6 @@ const applicationArea =
 
 const applicationForm =
     document.getElementById("applicationForm");
-
-const questionsContainer =
-    document.getElementById("questionsContainer");
 
 const applicationBadge =
     document.getElementById("applicationBadge");
@@ -42,21 +44,22 @@ const applicationID =
     document.getElementById("applicationID");
 
 
-/* ================================
-   APPLICATION BUTTONS
-================================ */
+/*
+    APPLICATION BUTTONS
+*/
 
 document
     .querySelectorAll(".application-card")
-    .forEach(card => {
+    .forEach(button => {
 
-        card.addEventListener(
+        button.addEventListener(
             "click",
             () => {
 
-                openApplication(
-                    card.dataset.application
-                );
+                const type =
+                    button.dataset.application;
+
+                openApplication(type);
 
             }
         );
@@ -64,17 +67,65 @@ document
     });
 
 
-/* ================================
-   APPLICANT VALIDATION
-================================ */
+/*
+    USERNAME / AGE INPUT
+*/
 
-function validateApplicant() {
+if (usernameInput) {
+
+    usernameInput.addEventListener(
+        "input",
+        () => {
+
+            clearError();
+
+        }
+    );
+
+}
+
+
+if (ageInput) {
+
+    ageInput.addEventListener(
+        "input",
+        () => {
+
+            clearError();
+
+            /*
+                Keep age numeric
+            */
+
+            ageInput.value =
+                ageInput.value.replace(
+                    /\D/g,
+                    ""
+                );
+
+        }
+    );
+
+}
+
+
+/*
+    OPEN APPLICATION
+*/
+
+function openApplication(type) {
+
+    clearError();
+
+
+    /*
+        USERNAME
+    */
 
     const username =
-        usernameInput.value.trim();
-
-    const ageValue =
-        ageInput.value.trim();
+        usernameInput
+            ? usernameInput.value.trim()
+            : "";
 
 
     if (!username) {
@@ -83,71 +134,50 @@ function validateApplicant() {
             "Enter your Discord username first."
         );
 
-        usernameInput.focus();
+        usernameInput?.focus();
 
-        return false;
+        return;
+
     }
 
 
-    if (!ageValue) {
+    /*
+        AGE
+    */
+
+    const age =
+        getAge();
+
+
+    if (age === null) {
 
         showError(
             "Enter your age first."
         );
 
-        ageInput.focus();
+        ageInput?.focus();
 
-        return false;
+        return;
+
     }
 
 
-    const age =
-        Number(ageValue);
-
-
-    if (
-        !Number.isInteger(age) ||
-        age < 1 ||
-        age > 99
-    ) {
-
-        showError(
-            "Enter a valid age."
-        );
-
-        ageInput.focus();
-
-        return false;
-    }
-
+    /*
+        UNDER 13
+    */
 
     if (age < 13) {
 
-        showError(
-            "You must be at least 13 years old to apply."
-        );
+        rejectUnder13();
 
-        return false;
-    }
-
-
-    return true;
-}
-
-
-/* ================================
-   OPEN APPLICATION
-================================ */
-
-function openApplication(type) {
-
-    clearError();
-
-
-    if (!validateApplicant()) {
         return;
+
     }
 
+
+    /*
+        FIND APPLICATION
+    */
 
     const application =
         window.APPLICATIONS?.[type];
@@ -160,8 +190,13 @@ function openApplication(type) {
         );
 
         return;
+
     }
 
+
+    /*
+        QUESTIONS
+    */
 
     const questions =
         Object.entries(
@@ -176,12 +211,30 @@ function openApplication(type) {
         );
 
         return;
+
+    }
+
+
+    if (
+        questions.length > 150
+    ) {
+
+        showError(
+            "This application cannot have more than 150 questions."
+        );
+
+        return;
+
     }
 
 
     selectedApplication =
         type;
 
+
+    /*
+        HEADER
+    */
 
     applicationBadge.textContent =
         application.badge ||
@@ -197,9 +250,17 @@ function openApplication(type) {
         `${questions.length} questions`;
 
 
-    questionsContainer.innerHTML =
+    /*
+        RESET FORM
+    */
+
+    applicationForm.innerHTML =
         "";
 
+
+    /*
+        CREATE QUESTIONS
+    */
 
     questions.forEach(
         ([number, data]) => {
@@ -213,15 +274,23 @@ function openApplication(type) {
     );
 
 
+    /*
+        SHOW
+    */
+
     applicationArea.classList.remove(
         "hidden"
     );
 
 
-    successArea.classList.add(
+    successArea?.classList.add(
         "hidden"
     );
 
+
+    /*
+        SCROLL
+    */
 
     setTimeout(
         () => {
@@ -234,12 +303,13 @@ function openApplication(type) {
         },
         50
     );
+
 }
 
 
-/* ================================
-   CREATE QUESTION
-================================ */
+/*
+    CREATE QUESTION
+*/
 
 function createQuestion(
     number,
@@ -247,7 +317,9 @@ function createQuestion(
 ) {
 
     const question =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
 
 
     question.className =
@@ -259,7 +331,8 @@ function createQuestion(
 
 
     const type =
-        data?.type || "text";
+        data?.type ||
+        "text";
 
 
     const required =
@@ -269,7 +342,13 @@ function createQuestion(
     let content = "";
 
 
-    if (type === "text") {
+    /*
+        TEXT
+    */
+
+    if (
+        type === "text"
+    ) {
 
         content = `
 
@@ -278,32 +357,38 @@ function createQuestion(
                 data-question="${escapeHTML(number)}"
                 data-type="text"
                 maxlength="4000"
-                placeholder="Write your answer..."
                 ${required ? "required" : ""}
+                placeholder="Type your answer..."
             ></textarea>
 
         `;
+
     }
 
 
-    else if (type === "multiple") {
+    /*
+        MULTIPLE CHOICE
+    */
+
+    else if (
+        type === "multiple"
+    ) {
 
         const choices =
-            Array.isArray(data?.choices)
+            Array.isArray(
+                data?.choices
+            )
                 ? data.choices
                 : [];
 
 
         content = `
 
-            <div
-                class="choices"
-                data-question="${escapeHTML(number)}"
-            >
+            <div class="choices">
 
                 ${choices
                     .map(
-                        choice => `
+                        (choice, index) => `
 
                             <label class="choice">
 
@@ -311,7 +396,11 @@ function createQuestion(
                                     type="radio"
                                     name="question_${escapeHTML(number)}"
                                     value="${escapeHTML(choice)}"
+                                    data-question="${escapeHTML(number)}"
                                     data-type="multiple"
+                                    ${required && index === 0
+                                        ? 'data-required="true"'
+                                        : ""}
                                 >
 
                                 <span>
@@ -327,13 +416,22 @@ function createQuestion(
             </div>
 
         `;
+
     }
 
 
-    else if (type === "file") {
+    /*
+        FILE
+    */
+
+    else if (
+        type === "file"
+    ) {
 
         const accept =
-            Array.isArray(data?.accept)
+            Array.isArray(
+                data?.accept
+            )
                 ? data.accept.join(",")
                 : "";
 
@@ -346,6 +444,7 @@ function createQuestion(
                     class="file-input"
                     type="file"
                     data-question="${escapeHTML(number)}"
+                    data-type="file"
                     ${required ? "required" : ""}
                     ${accept
                         ? `accept="${escapeHTML(accept)}"`
@@ -354,7 +453,7 @@ function createQuestion(
                 >
 
                 <div class="file-help">
-                    Maximum 5 MB per file · Maximum 10 files total
+                    Maximum 5 MB per file · Maximum 10 files
                 </div>
 
                 <div class="selected-files"></div>
@@ -362,8 +461,13 @@ function createQuestion(
             </div>
 
         `;
+
     }
 
+
+    /*
+        FALLBACK
+    */
 
     else {
 
@@ -375,17 +479,22 @@ function createQuestion(
                 data-type="text"
                 maxlength="4000"
                 required
-                placeholder="Write your answer..."
+                placeholder="Type your answer..."
             ></textarea>
 
         `;
+
     }
 
+
+    /*
+        QUESTION HTML
+    */
 
     question.innerHTML = `
 
         <div class="question-number">
-            Question ${escapeHTML(number)}
+            QUESTION ${escapeHTML(number)}
         </div>
 
         <div class="question-text">
@@ -399,7 +508,9 @@ function createQuestion(
             data?.example
                 ? `
                     <div class="example-answer">
-                        ${escapeHTML(data.example)}
+                        ${escapeHTML(
+                            data.example
+                        )}
                     </div>
                 `
                 : ""
@@ -410,10 +521,14 @@ function createQuestion(
     `;
 
 
-    questionsContainer.appendChild(
+    applicationForm.appendChild(
         question
     );
 
+
+    /*
+        FILE HANDLER
+    */
 
     const fileInput =
         question.querySelector(
@@ -435,14 +550,116 @@ function createQuestion(
         );
 
     }
+
+
+    /*
+        RADIO HANDLER
+    */
+
+    question
+        .querySelectorAll(
+            'input[type="radio"]'
+        )
+        .forEach(
+            radio => {
+
+                radio.addEventListener(
+                    "change",
+                    () => {
+
+                        clearError();
+
+                    }
+                );
+
+            }
+        );
+
 }
 
 
-/* ================================
-   FILE VALIDATION
-================================ */
+/*
+    AGE
+*/
 
-function validateFiles(input) {
+function getAge() {
+
+    if (!ageInput) {
+        return null;
+    }
+
+
+    const value =
+        ageInput.value.trim();
+
+
+    if (!value) {
+        return null;
+    }
+
+
+    const age =
+        Number(value);
+
+
+    if (
+        !Number.isInteger(age)
+    ) {
+
+        return null;
+
+    }
+
+
+    if (
+        age < 1 ||
+        age > 120
+    ) {
+
+        return null;
+
+    }
+
+
+    return age;
+
+}
+
+
+/*
+    UNDER 13
+*/
+
+function rejectUnder13() {
+
+    selectedApplication =
+        null;
+
+
+    applicationArea?.classList.add(
+        "hidden"
+    );
+
+
+    successArea?.classList.add(
+        "hidden"
+    );
+
+
+    showError(
+        "You must be at least 13 years old to submit an application."
+    );
+
+}
+
+
+/*
+    FILE VALIDATION
+*/
+
+function validateFiles(
+    input
+) {
 
     const files =
         Array.from(
@@ -454,441 +671,157 @@ function validateFiles(input) {
         5 * 1024 * 1024;
 
 
-    if (files.length > 10) {
+    /*
+        FILE COUNT
+    */
 
-        input.value = "";
+    if (
+        files.length > 10
+    ) {
+
+        input.value =
+            "";
+
+        updateSelectedFiles(
+            input
+        );
 
         showError(
             "You can upload a maximum of 10 files."
         );
 
         return false;
+
     }
 
 
-    for (const file of files) {
+    /*
+        FILE SIZE
+    */
 
-        if (file.size > maxSize) {
+    for (
+        const file
+        of files
+    ) {
 
-            input.value = "";
+        if (
+            file.size > maxSize
+        ) {
+
+            input.value =
+                "";
+
+            updateSelectedFiles(
+                input
+            );
 
             showError(
                 `"${file.name}" is larger than 5 MB.`
             );
 
             return false;
+
         }
+
     }
+
+
+    updateSelectedFiles(
+        input
+    );
 
 
     clearError();
-
-
-    const container =
-        input.parentElement?.querySelector(
-            ".selected-files"
-        );
-
-
-    if (container) {
-
-        container.innerHTML =
-            files
-                .map(
-                    file => `
-                        <div>
-                            ${escapeHTML(file.name)}
-                            — ${formatSize(file.size)}
-                        </div>
-                    `
-                )
-                .join("");
-    }
 
 
     return true;
+
 }
 
 
-/* ================================
-   SUBMIT
-================================ */
-
-submitButton.addEventListener(
-    "click",
-    submitApplication
-);
-
-
-async function submitApplication() {
-
-    clearError();
-
-
-    if (!selectedApplication) {
-
-        showError(
-            "Choose an application first."
-        );
-
-        return;
-    }
-
-
-    if (!validateApplicant()) {
-        return;
-    }
-
-
-    const application =
-        window.APPLICATIONS?.[
-            selectedApplication
-        ];
-
-
-    if (!application) {
-
-        showError(
-            "Application data could not be found."
-        );
-
-        return;
-    }
-
-
-    const answers = {};
-
-
-    /* TEXT */
-
-    document
-        .querySelectorAll(
-            'textarea[data-type="text"]'
-        )
-        .forEach(input => {
-
-            answers[
-                input.dataset.question
-            ] =
-                input.value.trim();
-
-        });
-
-
-    /* MULTIPLE */
-
-    document
-        .querySelectorAll(
-            ".choices[data-question]"
-        )
-        .forEach(group => {
-
-            const number =
-                group.dataset.question;
-
-
-            const selected =
-                group.querySelector(
-                    'input[type="radio"]:checked'
-                );
-
-
-            answers[number] =
-                selected
-                    ? selected.value
-                    : "";
-
-        });
-
-
-    /* REQUIRED QUESTIONS */
-
-    const blocks =
-        document.querySelectorAll(
-            ".question"
-        );
-
-
-    for (const block of blocks) {
-
-        const number =
-            block.dataset.question;
-
-
-        const data =
-            application.questions?.[
-                number
-            ];
-
-
-        if (
-            !data ||
-            data.required === false
-        ) {
-            continue;
-        }
-
-
-        if (data.type === "text") {
-
-            const textarea =
-                block.querySelector(
-                    "textarea"
-                );
-
-
-            if (
-                !textarea ||
-                !textarea.value.trim()
-            ) {
-
-                showError(
-                    "Please answer every required question."
-                );
-
-                textarea?.focus();
-
-                return;
-            }
-        }
-
-
-        else if (data.type === "multiple") {
-
-            const selected =
-                block.querySelector(
-                    'input[type="radio"]:checked'
-                );
-
-
-            if (!selected) {
-
-                showError(
-                    "Please answer every required question."
-                );
-
-                return;
-            }
-        }
-
-
-        else if (data.type === "file") {
-
-            const input =
-                block.querySelector(
-                    ".file-input"
-                );
-
-
-            if (
-                !input ||
-                input.files.length === 0
-            ) {
-
-                showError(
-                    "Please upload all required files."
-                );
-
-                return;
-            }
-        }
-    }
-
-
-    /* FILES */
-
-    const fileInputs =
-        document.querySelectorAll(
-            ".file-input"
-        );
-
-
-    let totalFiles = 0;
-
-
-    for (const input of fileInputs) {
-
-        const files =
-            Array.from(
-                input.files
+/*
+    FILE DISPLAY
+*/
+
+function updateSelectedFiles(
+    input
+) {
+
+    const container =
+        input.parentElement
+            ?.querySelector(
+                ".selected-files"
             );
 
 
-        totalFiles +=
-            files.length;
-
-
-        for (const file of files) {
-
-            if (
-                file.size >
-                5 * 1024 * 1024
-            ) {
-
-                showError(
-                    `"${file.name}" is larger than 5 MB.`
-                );
-
-                return;
-            }
-        }
-    }
-
-
-    if (totalFiles > 10) {
-
-        showError(
-            "You can upload a maximum of 10 files per application."
-        );
-
+    if (!container) {
         return;
     }
 
 
-    /* FORM DATA */
-
-    const formData =
-        new FormData();
-
-
-    formData.append(
-        "username",
-        usernameInput.value.trim()
-    );
+    const files =
+        Array.from(
+            input.files
+        );
 
 
-    formData.append(
-        "age",
-        String(
-            Number(
-                ageInput.value
+    if (!files.length) {
+
+        container.innerHTML =
+            "";
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        files
+            .map(
+                file => `
+
+                    <div class="selected-file">
+
+                        <span>
+                            ${escapeHTML(
+                                file.name
+                            )}
+                        </span>
+
+                        <span>
+                            ${formatSize(
+                                file.size
+                            )}
+                        </span>
+
+                    </div>
+
+                `
             )
-        )
-    );
+            .join("");
 
-
-    formData.append(
-        "applicationType",
-        selectedApplication
-    );
-
-
-    formData.append(
-        "answers",
-        JSON.stringify(
-            answers
-        )
-    );
-
-
-    for (const input of fileInputs) {
-
-        const questionNumber =
-            input.dataset.question;
-
-
-        for (const file of input.files) {
-
-            formData.append(
-                `file_${questionNumber}`,
-                file,
-                file.name
-            );
-        }
-    }
-
-
-    submitButton.disabled =
-        true;
-
-    submitButton.textContent =
-        "Submitting...";
-
-
-    try {
-
-        const response =
-            await fetch(
-                WORKER_URL,
-                {
-                    method:
-                        "POST",
-
-                    body:
-                        formData
-                }
-            );
-
-
-        const result =
-            await response
-                .json()
-                .catch(
-                    () => ({})
-                );
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                result.error ||
-                "Failed to submit application."
-            );
-        }
-
-
-        applicationID.textContent =
-            result.applicationId ||
-            "Unknown";
-
-
-        applicationArea.classList.add(
-            "hidden"
-        );
-
-
-        successArea.classList.remove(
-            "hidden"
-        );
-
-
-        successArea.scrollIntoView({
-            behavior: "smooth",
-            block: "center"
-        });
-
-    }
-
-    catch (error) {
-
-        showError(
-            error.message ||
-            "Something went wrong."
-        );
-
-    }
-
-    finally {
-
-        submitButton.disabled =
-            false;
-
-        submitButton.textContent =
-            "Submit Application";
-
-    }
 }
 
 
-/* ================================
-   HELPERS
-================================ */
+/*
+    FILE SIZE
+*/
 
-function formatSize(bytes) {
+function formatSize(
+    bytes
+) {
 
     if (
-        bytes <
-        1024 * 1024
+        bytes < 1024
+    ) {
+
+        return `${bytes} B`;
+
+    }
+
+
+    if (
+        bytes < 1024 * 1024
     ) {
 
         return (
@@ -896,6 +829,7 @@ function formatSize(bytes) {
                 .toFixed(1) +
             " KB"
         );
+
     }
 
 
@@ -905,34 +839,680 @@ function formatSize(bytes) {
             .toFixed(2) +
         " MB"
     );
+
 }
 
 
-function showError(message) {
+/*
+    SUBMIT
+*/
+
+applicationForm.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+
+        if (isSubmitting) {
+            return;
+        }
+
+
+        clearError();
+
+
+        /*
+            APPLICATION
+        */
+
+        if (!selectedApplication) {
+
+            showError(
+                "Choose an application first."
+            );
+
+            return;
+
+        }
+
+
+        /*
+            USERNAME
+        */
+
+        const username =
+            usernameInput
+                ?.value
+                .trim() ||
+            "";
+
+
+        if (!username) {
+
+            showError(
+                "Enter your Discord username."
+            );
+
+            usernameInput?.focus();
+
+            return;
+
+        }
+
+
+        /*
+            AGE
+        */
+
+        const age =
+            getAge();
+
+
+        if (age === null) {
+
+            showError(
+                "Enter a valid age."
+            );
+
+            ageInput?.focus();
+
+            return;
+
+        }
+
+
+        /*
+            AGE CHECK
+        */
+
+        if (
+            age < 13
+        ) {
+
+            rejectUnder13();
+
+            return;
+
+        }
+
+
+        /*
+            WORKER URL
+        */
+
+        if (
+            !WORKER_URL ||
+            WORKER_URL.includes(
+                "PASTE_YOUR"
+            )
+        ) {
+
+            showError(
+                "The application system has not been configured yet."
+            );
+
+            return;
+
+        }
+
+
+        /*
+            REQUIRED QUESTIONS
+        */
+
+        if (
+            !validateRequiredQuestions()
+        ) {
+
+            return;
+
+        }
+
+
+        /*
+            TOTAL FILES
+        */
+
+        const fileInputs =
+            document.querySelectorAll(
+                ".file-input"
+            );
+
+
+        let totalFiles =
+            0;
+
+
+        for (
+            const input
+            of fileInputs
+        ) {
+
+            totalFiles +=
+                input.files.length;
+
+        }
+
+
+        if (
+            totalFiles > 10
+        ) {
+
+            showError(
+                "You can upload a maximum of 10 files per application."
+            );
+
+            return;
+
+        }
+
+
+        /*
+            ANSWERS
+        */
+
+        const answers =
+            collectAnswers();
+
+
+        /*
+            FORM DATA
+        */
+
+        const formData =
+            new FormData();
+
+
+        formData.append(
+            "username",
+            username
+        );
+
+
+        formData.append(
+            "age",
+            String(age)
+        );
+
+
+        formData.append(
+            "applicationType",
+            selectedApplication
+        );
+
+
+        formData.append(
+            "answers",
+            JSON.stringify(
+                answers
+            )
+        );
+
+
+        /*
+            FILES
+        */
+
+        for (
+            const input
+            of fileInputs
+        ) {
+
+            const questionNumber =
+                input.dataset.question;
+
+
+            for (
+                const file
+                of input.files
+            ) {
+
+                formData.append(
+                    `file_${questionNumber}`,
+                    file,
+                    file.name
+                );
+
+            }
+
+        }
+
+
+        /*
+            SUBMIT STATE
+        */
+
+        isSubmitting =
+            true;
+
+
+        if (submitButton) {
+
+            submitButton.disabled =
+                true;
+
+            submitButton.textContent =
+                "Submitting...";
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    WORKER_URL,
+                    {
+                        method:
+                            "POST",
+
+                        body:
+                            formData
+                    }
+                );
+
+
+            let result = {};
+
+
+            try {
+
+                result =
+                    await response.json();
+
+            }
+            catch {
+
+                result =
+                    {};
+
+            }
+
+
+            /*
+                UNDER 13
+            */
+
+            if (
+                response.status === 403 &&
+                result.rejected
+            ) {
+
+                rejectUnder13();
+
+                showError(
+                    result.reason ||
+                    "Your application was rejected."
+                );
+
+                return;
+
+            }
+
+
+            /*
+                OTHER ERRORS
+            */
+
+            if (
+                !response.ok
+            ) {
+
+                throw new Error(
+                    result.error ||
+                    "Failed to submit application."
+                );
+
+            }
+
+
+            /*
+                SUCCESS
+            */
+
+            if (applicationID) {
+
+                applicationID.textContent =
+                    result.applicationId ||
+                    "Unknown";
+
+            }
+
+
+            successArea?.classList.remove(
+                "hidden"
+            );
+
+
+            applicationArea?.classList.add(
+                "hidden"
+            );
+
+
+            successArea?.scrollIntoView({
+                behavior: "smooth",
+                block: "center"
+            });
+
+
+        }
+        catch (error) {
+
+            showError(
+                error?.message ||
+                "Something went wrong while submitting your application."
+            );
+
+        }
+        finally {
+
+            isSubmitting =
+                false;
+
+
+            if (submitButton) {
+
+                submitButton.disabled =
+                    false;
+
+                submitButton.textContent =
+                    "Submit Application";
+
+            }
+
+        }
+
+    }
+);
+
+
+/*
+    COLLECT ANSWERS
+*/
+
+function collectAnswers() {
+
+    const answers =
+        {};
+
+
+    /*
+        TEXT
+    */
+
+    applicationForm
+        .querySelectorAll(
+            'textarea[data-type="text"]'
+        )
+        .forEach(
+            input => {
+
+                answers[
+                    input.dataset.question
+                ] =
+                    input.value.trim();
+
+            }
+        );
+
+
+    /*
+        MULTIPLE CHOICE
+    */
+
+    applicationForm
+        .querySelectorAll(
+            'input[data-type="multiple"]'
+        )
+        .forEach(
+            input => {
+
+                const number =
+                    input.dataset.question;
+
+
+                if (
+                    Object.prototype.hasOwnProperty.call(
+                        answers,
+                        number
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                const selected =
+                    applicationForm.querySelector(
+                        `input[data-type="multiple"][data-question="${CSS.escape(number)}"]:checked`
+                    );
+
+
+                answers[number] =
+                    selected
+                        ? selected.value
+                        : "";
+
+            }
+        );
+
+
+    return answers;
+
+}
+
+
+/*
+    REQUIRED QUESTIONS
+*/
+
+function validateRequiredQuestions() {
+
+    const blocks =
+        applicationForm.querySelectorAll(
+            ".question"
+        );
+
+
+    for (
+        const block
+        of blocks
+    ) {
+
+        /*
+            TEXT
+        */
+
+        const textarea =
+            block.querySelector(
+                "textarea.answer"
+            );
+
+
+        if (textarea) {
+
+            if (
+                textarea.required &&
+                !textarea.value.trim()
+            ) {
+
+                showError(
+                    "Please answer every required question."
+                );
+
+
+                textarea.focus();
+
+
+                return false;
+
+            }
+
+
+            continue;
+
+        }
+
+
+        /*
+            FILE
+        */
+
+        const fileInput =
+            block.querySelector(
+                ".file-input"
+            );
+
+
+        if (fileInput) {
+
+            if (
+                fileInput.required &&
+                fileInput.files.length === 0
+            ) {
+
+                showError(
+                    "Please upload all required files."
+                );
+
+
+                fileInput.focus();
+
+
+                return false;
+
+            }
+
+
+            continue;
+
+        }
+
+
+        /*
+            MULTIPLE CHOICE
+        */
+
+        const radio =
+            block.querySelector(
+                'input[type="radio"]'
+            );
+
+
+        if (radio) {
+
+            const required =
+                block.querySelector(
+                    'input[data-required="true"]'
+                );
+
+
+            if (
+                required &&
+                !block.querySelector(
+                    'input[type="radio"]:checked'
+                )
+            ) {
+
+                showError(
+                    "Please answer every required question."
+                );
+
+
+                radio.focus();
+
+
+                return false;
+
+            }
+
+        }
+
+    }
+
+
+    return true;
+
+}
+
+
+/*
+    ERROR
+*/
+
+function showError(
+    message
+) {
+
+    if (!errorMessage) {
+        return;
+    }
+
 
     errorMessage.textContent =
         message;
+
+
+    errorMessage.classList.add(
+        "visible"
+    );
+
 }
 
+
+/*
+    CLEAR ERROR
+*/
 
 function clearError() {
 
+    if (!errorMessage) {
+        return;
+    }
+
+
     errorMessage.textContent =
         "";
+
+
+    errorMessage.classList.remove(
+        "visible"
+    );
+
 }
 
 
-function escapeHTML(value) {
+/*
+    HTML ESCAPE
+*/
+
+function escapeHTML(
+    value
+) {
 
     return String(value)
         .replace(
             /[&<>"']/g,
             character => ({
-                "&": "&amp;",
-                "<": "&lt;",
-                ">": "&gt;",
-                '"': "&quot;",
-                "'": "&#039;"
-            })[character]
+
+                "&":
+                    "&amp;",
+
+                "<":
+                    "&lt;",
+
+                ">":
+                    "&gt;",
+
+                '"':
+                    "&quot;",
+
+                "'":
+                    "&#039;"
+
+            }[character])
         );
+
 }
