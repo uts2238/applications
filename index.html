@@ -36,63 +36,55 @@
             </p>
 
 
-            <div class="applicant-info">
+<div class="applicant-info">
 
-                <div class="username-box">
+    <div class="info-field">
 
-                    <label for="username">
-                        Discord Username
-                    </label>
+        <label for="username">
+            Discord Username
+        </label>
 
-                    <div class="input-wrap">
+        <input
+            id="username"
+            class="username"
+            type="text"
+            maxlength="100"
+            placeholder="your Discord username"
+            autocomplete="off"
+            spellcheck="false"
+        >
 
-                        <span class="input-prefix">
-                            @
-                        </span>
+        <small>
+            Enter your Discord username.
+        </small>
 
-                        <input
-                            id="username"
-                            class="username"
-                            type="text"
-                            maxlength="100"
-                            placeholder="username"
-                            autocomplete="off"
-                            spellcheck="false"
-                        >
-
-                    </div>
-
-                    <small>
-                        Enter the Discord account you'll be using.
-                    </small>
-
-                </div>
+    </div>
 
 
-                <div class="age-box">
+    <div class="info-field age-field">
 
-                    <label for="age">
-                        Age
-                    </label>
+        <label for="age">
+            Age
+        </label>
 
-                    <input
-                        id="age"
-                        class="age"
-                        type="number"
-                        min="1"
-                        max="99"
-                        placeholder="13"
-                        autocomplete="off"
-                        inputmode="numeric"
-                    >
+        <input
+            id="age"
+            class="age"
+            type="number"
+            min="1"
+            max="99"
+            placeholder="13"
+            autocomplete="off"
+            inputmode="numeric"
+        >
 
-                    <small>
-                        You must be 13+.
-                    </small>
+        <small>
+            13+ required.
+        </small>
 
-                </div>
+    </div>
 
-            </div>
+</div>
 
         </header>
 
