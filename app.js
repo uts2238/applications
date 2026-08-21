@@ -5,6 +5,10 @@ const WORKER_URL =
 let selectedApplication = null;
 
 
+/*
+    ELEMENTS
+*/
+
 const usernameInput =
     document.getElementById("username");
 
@@ -30,25 +34,33 @@ const submitButton =
     document.getElementById("submitButton");
 
 
+/*
+    APPLICATION BUTTONS
+*/
+
 document
     .querySelectorAll(".application-card")
     .forEach(button => {
 
-        button.addEventListener(
-            "click",
-            () => {
+        button.addEventListener("click", () => {
 
-                openApplication(
-                    button.dataset.application
-                );
+            openApplication(
+                button.dataset.application
+            );
 
-            }
-        );
+        });
 
     });
 
 
+/*
+    OPEN APPLICATION
+*/
+
 function openApplication(type) {
+
+    clearError();
+
 
     const username =
         usernameInput.value.trim();
@@ -57,7 +69,7 @@ function openApplication(type) {
     if (!username) {
 
         showError(
-            "Enter your Discord username first."
+            "Enter your Roblox username first."
         );
 
         usernameInput.focus();
@@ -76,6 +88,11 @@ function openApplication(type) {
             "This application could not be found."
         );
 
+        console.error(
+            "Application not found:",
+            type
+        );
+
         return;
     }
 
@@ -84,6 +101,28 @@ function openApplication(type) {
         Object.entries(
             application.questions || {}
         );
+
+
+    /*
+        DEBUG
+
+        This lets you immediately see
+        how many questions were loaded.
+    */
+
+    console.log(
+        `${application.title}: ${questions.length} questions loaded`
+    );
+
+
+    if (questions.length === 0) {
+
+        showError(
+            "This application has no questions."
+        );
+
+        return;
+    }
 
 
     if (questions.length > 150) {
@@ -100,9 +139,6 @@ function openApplication(type) {
         type;
 
 
-    clearError();
-
-
     applicationBadge.textContent =
         application.badge ||
         type.toUpperCase();
@@ -117,24 +153,29 @@ function openApplication(type) {
         `${questions.length} questions`;
 
 
-    applicationForm.innerHTML =
-        "";
+    /*
+        CLEAR OLD QUESTIONS
+    */
 
+    applicationForm.innerHTML = "";
+
+
+    /*
+        CREATE QUESTIONS
+    */
 
     questions.forEach(
         ([number, data]) => {
 
             const question =
-                document.createElement(
-                    "div"
-                );
+                document.createElement("div");
 
 
             question.className =
                 "question";
 
 
-            const type =
+            const questionType =
                 data?.type || "text";
 
 
@@ -146,10 +187,12 @@ function openApplication(type) {
 
 
             /*
-                TEXT QUESTION
+                TEXT
             */
 
-            if (type === "text") {
+            if (
+                questionType === "text"
+            ) {
 
                 content = `
 
@@ -158,8 +201,8 @@ function openApplication(type) {
                         data-question="${escapeHTML(number)}"
                         data-type="text"
                         maxlength="4000"
+                        placeholder="Write your answer here..."
                         ${required ? "required" : ""}
-                        placeholder="Your answer..."
                     ></textarea>
 
                 `;
@@ -172,43 +215,44 @@ function openApplication(type) {
             */
 
             else if (
-                type === "multiple"
+                questionType === "multiple"
             ) {
 
                 const choices =
-                    Array.isArray(
-                        data.choices
-                    )
+                    Array.isArray(data?.choices)
                         ? data.choices
                         : [];
 
 
                 content = `
 
-                    <div class="choices">
+                    <div
+                        class="choices"
+                        data-question="${escapeHTML(number)}"
+                        data-required="${required}"
+                    >
 
                         ${choices
                             .map(
                                 (choice, index) => `
 
-                                <label class="choice">
+                                    <label class="choice">
 
-                                    <input
-                                        type="radio"
-                                        name="question_${escapeHTML(number)}"
-                                        value="${escapeHTML(choice)}"
-                                        data-question="${escapeHTML(number)}"
-                                        data-type="multiple"
-                                        ${required && index === 0 ? "data-required='true'" : ""}
-                                    >
+                                        <input
+                                            type="radio"
+                                            name="question_${escapeHTML(number)}"
+                                            value="${escapeHTML(choice)}"
+                                            data-question="${escapeHTML(number)}"
+                                            data-type="multiple"
+                                        >
 
-                                    <span>
-                                        ${escapeHTML(choice)}
-                                    </span>
+                                        <span>
+                                            ${escapeHTML(choice)}
+                                        </span>
 
-                                </label>
+                                    </label>
 
-                            `
+                                `
                             )
                             .join("")}
 
@@ -220,17 +264,15 @@ function openApplication(type) {
 
 
             /*
-                FILE UPLOAD
+                FILE
             */
 
             else if (
-                type === "file"
+                questionType === "file"
             ) {
 
                 const accept =
-                    Array.isArray(
-                        data.accept
-                    )
+                    Array.isArray(data?.accept)
                         ? data.accept.join(",")
                         : "";
 
@@ -245,13 +287,14 @@ function openApplication(type) {
                             data-question="${escapeHTML(number)}"
                             data-type="file"
                             ${required ? "required" : ""}
-                            ${accept ? `accept="${escapeHTML(accept)}"` : ""}
+                            ${accept
+                                ? `accept="${escapeHTML(accept)}"`
+                                : ""}
                             multiple
                         >
 
                         <div class="file-help">
-                            Maximum 5 MB per file.
-                            Maximum 10 files total.
+                            Maximum 5 MB per file · Maximum 10 files
                         </div>
 
                         <div class="selected-files"></div>
@@ -277,7 +320,7 @@ function openApplication(type) {
                         data-type="text"
                         maxlength="4000"
                         required
-                        placeholder="Your answer..."
+                        placeholder="Write your answer here..."
                     ></textarea>
 
                 `;
@@ -285,26 +328,28 @@ function openApplication(type) {
             }
 
 
+            /*
+                QUESTION HTML
+            */
+
             question.innerHTML = `
 
                 <div class="question-number">
-                    QUESTION ${escapeHTML(number)}
+                    Question ${escapeHTML(number)}
                 </div>
 
                 <div class="question-text">
-
                     ${escapeHTML(
                         data?.question ||
                         "Question unavailable."
                     )}
-
                 </div>
 
                 ${
                     data?.example
                         ? `
                             <div class="example-answer">
-                                Example: ${escapeHTML(data.example)}
+                                ${escapeHTML(data.example)}
                             </div>
                         `
                         : ""
@@ -321,7 +366,7 @@ function openApplication(type) {
 
 
             /*
-                FILE PREVIEW / VALIDATION
+                FILE HANDLER
             */
 
             const fileInput =
@@ -349,15 +394,33 @@ function openApplication(type) {
     );
 
 
+    /*
+        SHOW APPLICATION
+    */
+
     applicationArea.classList.remove(
         "hidden"
     );
 
 
-    document
-        .getElementById("successArea")
-        .classList.add("hidden");
+    const successArea =
+        document.getElementById(
+            "successArea"
+        );
 
+
+    if (successArea) {
+
+        successArea.classList.add(
+            "hidden"
+        );
+
+    }
+
+
+    /*
+        SCROLL
+    */
 
     setTimeout(() => {
 
@@ -371,23 +434,19 @@ function openApplication(type) {
 }
 
 
-function validateFiles(
-    input
-) {
+/*
+    FILE VALIDATION
+*/
+
+function validateFiles(input) {
 
     const files =
-        Array.from(
-            input.files
-        );
+        Array.from(input.files);
 
 
     const maxSize =
         5 * 1024 * 1024;
 
-
-    /*
-        Maximum 10 files
-    */
 
     if (files.length > 10) {
 
@@ -401,19 +460,9 @@ function validateFiles(
     }
 
 
-    /*
-        Maximum 5 MB EACH
-    */
+    for (const file of files) {
 
-    for (
-        const file
-        of files
-    ) {
-
-        if (
-            file.size >
-            maxSize
-        ) {
+        if (file.size > maxSize) {
 
             input.value = "";
 
@@ -432,7 +481,7 @@ function validateFiles(
 
     const container =
         input.parentElement
-            .querySelector(
+            ?.querySelector(
                 ".selected-files"
             );
 
@@ -441,12 +490,18 @@ function validateFiles(
 
         container.innerHTML =
             files.length
+
                 ? files
                     .map(
-                        file =>
-                            `<div>${escapeHTML(file.name)} — ${formatSize(file.size)}</div>`
+                        file => `
+                            <div>
+                                ${escapeHTML(file.name)}
+                                — ${formatSize(file.size)}
+                            </div>
+                        `
                     )
                     .join("")
+
                 : "";
 
     }
@@ -457,14 +512,13 @@ function validateFiles(
 }
 
 
-function formatSize(
-    bytes
-) {
+/*
+    FILE SIZE
+*/
 
-    if (
-        bytes <
-        1024 * 1024
-    ) {
+function formatSize(bytes) {
+
+    if (bytes < 1024 * 1024) {
 
         return (
             (bytes / 1024)
@@ -476,8 +530,7 @@ function formatSize(
 
 
     return (
-        (bytes /
-            (1024 * 1024))
+        (bytes / (1024 * 1024))
             .toFixed(2) +
         " MB"
     );
@@ -494,7 +547,6 @@ applicationForm.addEventListener(
     async event => {
 
         event.preventDefault();
-
 
         clearError();
 
@@ -516,8 +568,10 @@ applicationForm.addEventListener(
         if (!username) {
 
             showError(
-                "Enter your Discord username."
+                "Enter your Roblox username."
             );
+
+            usernameInput.focus();
 
             return;
         }
@@ -538,6 +592,26 @@ applicationForm.addEventListener(
 
 
         /*
+            GET CURRENT APPLICATION
+        */
+
+        const application =
+            window.APPLICATIONS?.[
+                selectedApplication
+            ];
+
+
+        if (!application) {
+
+            showError(
+                "Application data could not be found."
+            );
+
+            return;
+        }
+
+
+        /*
             ANSWERS
         */
 
@@ -545,7 +619,7 @@ applicationForm.addEventListener(
 
 
         /*
-            TEXT
+            TEXT ANSWERS
         */
 
         document
@@ -566,40 +640,28 @@ applicationForm.addEventListener(
             MULTIPLE CHOICE
         */
 
-        const multipleQuestions =
-            new Set();
-
-
         document
             .querySelectorAll(
-                'input[data-type="multiple"]'
+                '.choices[data-question]'
             )
-            .forEach(input => {
+            .forEach(group => {
 
-                multipleQuestions.add(
-                    input.dataset.question
-                );
+                const number =
+                    group.dataset.question;
+
+
+                const selected =
+                    group.querySelector(
+                        'input[type="radio"]:checked'
+                    );
+
+
+                answers[number] =
+                    selected
+                        ? selected.value
+                        : "";
 
             });
-
-
-        for (
-            const number
-            of multipleQuestions
-        ) {
-
-            const selected =
-                document.querySelector(
-                    `input[data-type="multiple"][data-question="${CSS.escape(number)}"]:checked`
-                );
-
-
-            answers[number] =
-                selected
-                    ? selected.value
-                    : "";
-
-        }
 
 
         /*
@@ -630,19 +692,6 @@ applicationForm.addEventListener(
                 files.length;
 
 
-            if (
-                files.length >
-                10
-            ) {
-
-                showError(
-                    "You can upload a maximum of 10 files."
-                );
-
-                return;
-            }
-
-
             for (
                 const file
                 of files
@@ -665,10 +714,7 @@ applicationForm.addEventListener(
         }
 
 
-        if (
-            totalFiles >
-            10
-        ) {
+        if (totalFiles > 10) {
 
             showError(
                 "You can upload a maximum of 10 files per application."
@@ -679,7 +725,7 @@ applicationForm.addEventListener(
 
 
         /*
-            CHECK REQUIRED QUESTIONS
+            REQUIRED QUESTIONS
         */
 
         const questionBlocks =
@@ -693,29 +739,105 @@ applicationForm.addEventListener(
             of questionBlocks
         ) {
 
-            const input =
+            const number =
                 block.querySelector(
-                    ".answer, .file-input"
-                );
+                    ".question-number"
+                )?.textContent
+                    ?.replace(
+                        "Question ",
+                        ""
+                    )
+                    ?.trim();
 
 
-            const required =
-                input?.required ||
-                block.querySelector(
-                    'input[data-required="true"]'
-                );
-
-
-            if (!required)
-                continue;
+            const questionData =
+                application.questions?.[
+                    number
+                ];
 
 
             if (
-                input?.type ===
-                "file"
+                !questionData ||
+                questionData.required === false
             ) {
 
+                continue;
+            }
+
+
+            /*
+                TEXT
+            */
+
+            if (
+                questionData.type === "text"
+            ) {
+
+                const input =
+                    block.querySelector(
+                        "textarea"
+                    );
+
+
                 if (
+                    !input ||
+                    !input.value.trim()
+                ) {
+
+                    showError(
+                        "Please answer every required question."
+                    );
+
+                    input?.focus();
+
+                    return;
+                }
+
+            }
+
+
+            /*
+                MULTIPLE
+            */
+
+            else if (
+                questionData.type === "multiple"
+            ) {
+
+                const selected =
+                    block.querySelector(
+                        'input[type="radio"]:checked'
+                    );
+
+
+                if (!selected) {
+
+                    showError(
+                        "Please answer every required question."
+                    );
+
+                    return;
+                }
+
+            }
+
+
+            /*
+                FILE
+            */
+
+            else if (
+                questionData.type === "file"
+            ) {
+
+                const input =
+                    block.querySelector(
+                        ".file-input"
+                    );
+
+
+                if (
+                    !input ||
                     input.files.length === 0
                 ) {
 
@@ -728,48 +850,11 @@ applicationForm.addEventListener(
 
             }
 
-            else if (
-                input?.type ===
-                "textarea"
-            ) {
-
-                if (
-                    !input.value.trim()
-                ) {
-
-                    showError(
-                        "Please answer every required question."
-                    );
-
-                    return;
-                }
-
-            }
-
-            else {
-
-                const checked =
-                    block.querySelector(
-                        'input[type="radio"]:checked'
-                    );
-
-
-                if (!checked) {
-
-                    showError(
-                        "Please answer every required question."
-                    );
-
-                    return;
-                }
-
-            }
-
         }
 
 
         /*
-            BUILD MULTIPART REQUEST
+            FORM DATA
         */
 
         const formData =
@@ -825,6 +910,10 @@ applicationForm.addEventListener(
         }
 
 
+        /*
+            SUBMITTING
+        */
+
         submitButton.disabled =
             true;
 
@@ -838,13 +927,8 @@ applicationForm.addEventListener(
                 await fetch(
                     WORKER_URL,
                     {
-
-                        method:
-                            "POST",
-
-                        body:
-                            formData
-
+                        method: "POST",
+                        body: formData
                     }
                 );
 
@@ -857,9 +941,7 @@ applicationForm.addEventListener(
                     );
 
 
-            if (
-                !response.ok
-            ) {
+            if (!response.ok) {
 
                 throw new Error(
                     result.error ||
@@ -869,38 +951,43 @@ applicationForm.addEventListener(
             }
 
 
-            document
-                .getElementById(
+            const applicationID =
+                document.getElementById(
                     "applicationID"
-                )
-                .textContent =
+                );
+
+
+            if (applicationID) {
+
+                applicationID.textContent =
                     result.applicationId ||
                     "Unknown";
 
+            }
 
-            document
-                .getElementById(
+
+            const successArea =
+                document.getElementById(
                     "successArea"
-                )
-                .classList.remove(
+                );
+
+
+            if (successArea) {
+
+                successArea.classList.remove(
                     "hidden"
                 );
 
 
-            document
-                .getElementById(
-                    "successArea"
-                )
-                .scrollIntoView({
+                successArea.scrollIntoView({
                     behavior: "smooth",
                     block: "center"
                 });
 
+            }
 
         }
-        catch (
-            error
-        ) {
+        catch (error) {
 
             showError(
                 error.message ||
@@ -922,9 +1009,11 @@ applicationForm.addEventListener(
 );
 
 
-function showError(
-    message
-) {
+/*
+    ERROR
+*/
+
+function showError(message) {
 
     errorMessage.textContent =
         message;
@@ -940,21 +1029,21 @@ function clearError() {
 }
 
 
-function escapeHTML(
-    value
-) {
+/*
+    HTML ESCAPE
+*/
+
+function escapeHTML(value) {
 
     return String(value)
         .replace(
             /[&<>"']/g,
             character => ({
-
                 "&": "&amp;",
                 "<": "&lt;",
                 ">": "&gt;",
                 '"': "&quot;",
                 "'": "&#039;"
-
             }[character])
         );
 
